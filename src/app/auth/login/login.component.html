@@ -1,52 +1,118 @@
-<div class="min-w-screen min-h-screen flex items-center justify-center px-5 py-5">
-    <div class="bg-neutral-800 text-gray-200 rounded-3xl w-full max-w-4xl overflow-hidden shadow-lg">
-        <div class="md:flex">
-            <!-- Imagen lateral -->
-            <div class="hidden md:block md:w-1/2">
-                <img src="https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="Man in server"
-                class="object-cover h-full w-full">
-            </div>
-            
-            <!-- Formulario de login -->
-            <div class="w-full md:w-1/2 py-8 px-6">
-                <div class="flex flex-col items-center justify-center px-6 py-8">
-                    <!-- Logo -->
-                    <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-white">
-                        <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo">
-                        Flowbite    
-                    </a>
-                    <!-- Formulario -->
-                    <div class="w-full space-y-6">
-                        <h1 class="text-2xl font-bold tracking-tight text-white md:text-3xl">Inicia sesión</h1>
-                        
-                        <form class="space-y-4" action="#" method="POST" aria-label="Formulario de inicio de sesión">
-                            <!-- Campo de usuario -->
-                            <div>
-                                <label for="username" class="block mb-2 text-sm font-medium text-gray-200">Usuario</label>
-                                <input type="text" name="username" id="username" class="bg-neutral-700 border border-neutral-700 text-gray-200 rounded-lg focus:ring-lime-300 focus:border-lime-300 block w-full p-3" placeholder="Usuario" required>
-                            </div>
-                            
-                            <!-- Campo de contraseña -->
-                            <div>
-                                <label for="password" class="block mb-2 text-sm font-medium text-gray-200">Contraseña</label>
-                                <input type="password" name="password" id="password" placeholder="••••••••" class="bg-neutral-700 border border-neutral-700 text-gray-200 rounded-lg focus:ring-lime-300 focus:border-lime-300 block w-full p-3" required>
-                            </div>
+<div
+  class="min-w-screen min-h-screen flex items-center justify-center px-5 py-5"
+>
+  <div
+    class="bg-neutral-800 text-gray-200 rounded-3xl w-full max-w-4xl overflow-hidden shadow-lg"
+  >
+    <div class="md:flex">
+      <!-- Imagen lateral -->
+      <div class="hidden md:block md:w-1/2">
+        <img
+          src="https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          alt="Man in server"
+          class="object-cover h-full w-full"
+        />
+      </div>
 
-                            <!-- Botón de inicio de sesión -->
-                            <div class="flex justify-end">
-                                <button type="submit" class="bg-lime-300 text-neutral-800 hover:bg-lime-400 focus:ring-4 focus:outline-none focus:ring-lime-200 font-medium rounded-lg text-sm px-6 py-2.5">Iniciar Sesión</button>
-                            </div>
+      <!-- Formulario de login -->
+      <div class="w-full md:w-1/2 py-8 px-6">
+        <div class="flex flex-col items-center justify-center px-6 py-8">
+          <!-- Logo -->
+          <a
+            href="#"
+            class="flex items-center mb-6 text-2xl font-semibold text-lime-300"
+          >
+            <img
+              class="w-8 h-8 mr-2"
+              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
+              alt="logo"
+            />
+            ProHelp
+          </a>
+          <!-- Formulario -->
+          <div class="w-full space-y-6">
+            <h1
+              class="text-2xl font-bold tracking-tight text-gray-200 md:text-3xl"
+            >
+              Inicia sesión
+            </h1>
 
-                            <!-- Links de ayuda -->
-                            <div class="flex flex-col items-center justify-center space-y-1">
-                                <a href="#" class="text-sm font-medium text-gray-200 hover:underline">Recuperar Contraseña</a>
-                                <a href="#" class="text-sm font-light text-gray-400 hover:underline">Políticas de uso</a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            <form
+              class="space-y-4"
+              action="#"
+              method="POST"
+              aria-label="Formulario de inicio de sesión"
+              [formGroup]="loginForm"
+              (ngSubmit)="onLogin()"
+            >
+              <!-- Campo de usuario -->
+              <div>
+                <label
+                  for="username"
+                  class="block mb-2 text-sm font-medium text-gray-200"
+                  >Usuario</label
+                >
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  class="bg-neutral-700 border border-neutral-700 text-gray-200 rounded-lg focus:ring-lime-300 focus:border-lime-300 block w-full p-3"
+                  placeholder="Usuario"
+                  formControlName="username"
+                />
+                <div *ngIf="isRequired('username')" class="text-red-400 text-sm mt-2">
+                    El usuario es obligatoria.
+                  </div>
+              </div>
+
+              <!-- Campo de contraseña -->
+              <div>
+                <label
+                  for="password"
+                  class="block mb-2 text-sm font-medium text-gray-200"
+                  >Contraseña</label
+                >
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="••••••••"
+                  class="bg-neutral-700 border border-neutral-700 text-gray-200 rounded-lg focus:ring-lime-300 focus:border-lime-300 block w-full p-3"
+                  formControlName="password"
+                />
+                <div *ngIf="isRequired('password')" class="mt-2 text-sm text-red-400">
+                    La contraseña es obligatoria.
+                  </div>
+              </div>
+
+              <!-- Botón de inicio de sesión -->
+              <div class="flex justify-end">
+                <button
+                  type="submit"
+                  class="bg-lime-300 text-neutral-800 hover:bg-lime-400 focus:ring-4 focus:outline-none focus:ring-lime-200 font-medium rounded-lg text-sm px-6 py-2.5"
+                  [disabled]="loginForm.invalid"
+                >
+                  Iniciar Sesión
+                </button>
+              </div>
+
+              <!-- Links de ayuda -->
+              <div class="flex flex-col items-center justify-center space-y-1">
+                <a
+                  href="#"
+                  class="text-sm font-medium text-gray-200 hover:underline"
+                  >Recuperar Contraseña</a
+                >
+                <a
+                  href="#"
+                  class="text-sm font-light text-gray-400 hover:underline"
+                  >Políticas de uso</a
+                >
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
