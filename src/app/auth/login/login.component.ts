@@ -41,7 +41,7 @@ export default class LoginComponent {
             this.errorMessage = errorData;
           },
           complete: () => {
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/dashboard/main']);
           }
         });
       } else {
