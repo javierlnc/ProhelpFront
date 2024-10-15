@@ -1,0 +1,6 @@
+.sidebar--max{
+  @apply hover:ml-4 w-full text-gray-200 hover:text-lime-300 bg-neutral-800 p-3 pl-8 rounded-full space-x-3 flex items-center  transform ease-in-out duration-300;
+}
+.sidebar--mini{
+    @apply hover:ml-4 w-full text-gray-200 hover:text-lime-300  bg-neutral-800 pr-3 p-3 rounded-full flex justify-end transform ease-in-out duration-300;
+}

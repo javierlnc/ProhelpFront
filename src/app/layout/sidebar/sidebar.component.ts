@@ -1,11 +1,12 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   animations: [
     trigger('sidebarAnimation', [
       state('open', style({
