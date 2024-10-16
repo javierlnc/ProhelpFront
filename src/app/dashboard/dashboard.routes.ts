@@ -8,5 +8,9 @@ export default [
     {
         path: 'prueba', loadComponent: () => import('./prueba/prueba.component'),
         
+    },
+    {
+        path: 'tools', loadComponent: () => import('./admintools/admintools.component'),
+        
     }
 ] as Routes;

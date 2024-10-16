@@ -1,0 +1,19 @@
+{
+  "herramientas": [
+    {
+      "name": "categorias",
+      "title": "Gestiona tus Categorías",
+      "description": "Organiza y administra las categorías que estructuran tu sistema. Crea nuevas, edita o elimina las existentes para mantener tu contenido bien clasificado y optimizado."
+    },
+    {
+      "name": "resoluciones",
+      "title": "Resoluciones",
+      "description": "Crea, edita o elimina resoluciones para estandarizar la gestión de solicitudes."
+    },
+    {
+      "name": "reportes",
+      "title": "Genera Reportes",
+      "description": "Obtén reportes detallados de las solicitudes, ya sea por técnico o de todo el equipo. Mejora la toma de decisiones con información clara y precisa."
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import { isRequired } from './../utils/validators';
+import { isRequired } from '../../utils/validators';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
