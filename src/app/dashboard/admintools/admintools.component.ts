@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CardComponent } from "../../layout/card/card.component";
 import { CopyServiceService } from '../../utils/copy-service.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-admintools',
   standalone: true,
-  imports: [CardComponent],
+  imports: [CardComponent, RouterLink],
   templateUrl: './admintools.component.html',
   styleUrl: './admintools.component.css'
 })

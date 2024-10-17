@@ -1,0 +1,88 @@
+<div class="relative overflow-y-hidden overflow-x-auto pb-4 px-4 shadow-md sm:rounded-lg" style="height: calc(100vh - 100px);">
+  <div
+    class="flex flex-col sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center pb-4"
+  >
+    <div
+      class="inline-flex items-center text-neutral-800 font-medium rounded-lg text-lg px-3 py-1.5"
+    >
+      Categorias
+    </div>
+    <label for="table-search" class="sr-only">Buscar</label>
+    <div class="relative">
+      <div
+        class="absolute inset-y-0 left-0 rtl:inset-r-0 rtl:right-0 flex items-center ps-3 pointer-events-none"
+      >
+        <svg
+          class="w-4 h-4 text-gray-500 dark:text-gray-400"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 20 20"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+          />
+        </svg>
+      </div>
+      <input
+        type="text"
+        id="table-search"
+        placeholder="Buscar categoría"
+        class="block p-2 ps-10 text-sm text-neutral-800 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+  </div>
+  <div class="p-4 space-x-4">
+    <button class="button-primary" (click)="openModal()" >Nueva</button>
+    <button class="button-primary">Eliminar </button>
+  </div>
+  <!-- Inicio Tabla -->
+  <table class="w-full">
+    <!-- Inicio Cabecera -->
+    <thead class="text-sm border-b text-neutral-900 bg-gray-50 ">
+        <tr>
+            <th scope="col" class="p-4">
+                <div class="flex items-center">
+                    <input type="checkbox" id="checkbox-all-categories" 
+                    class="w-4 text-lime-300 bg-gray-100 border-gray-300 accent-lime-300 focus:accent-lime-500 focus:ring-2">
+                    <label for="checkbox-all-categories" class="sr-only">CheckBox</label>
+                </div>
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Categoría
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Accion
+            </th>
+        </tr>
+    </thead>
+<!-- Fin Cabecera -->
+ <!-- contenido tabla -->
+ <tbody>
+    <tr class="hover:bg-lime-100 border-b border-neutral-500" *ngFor="let category of categories">
+        <td class="w-4 p-4">
+            <div class="flex items-center" 
+            >
+                <input type="checkbox" id="checkbox-table" 
+                class="w-4 text-lime-300 bg-gray-100 border-gray-300 accent-lime-300 focus:accent-lime-500 focus:ring-2">
+                    <label for="checkbox-table" class="sr-only">CheckBox</label>
+            </div>
+        </td>
+        <th scope="row" class="px-2 py-4 font-medium whitespace-nowrap">
+            {{category.name}}
+            
+        </th>
+        <td class="px-6 py-4 text-center">
+            <a href="#" class="font-medium text-blue-600  hover:underline">Edit</a>
+        </td>
+    </tr>
+
+ </tbody>
+  </table>
+  <!-- fin tabla -->
+</div>
+<app-new-modal *ngIf="showModal" (close)="closeModal()"></app-new-modal>

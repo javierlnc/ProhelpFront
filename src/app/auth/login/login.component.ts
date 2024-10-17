@@ -1,4 +1,4 @@
-import { isRequired } from '../../utils/validators';
+import { isRequiredLogin } from '../../utils/validators';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
@@ -22,7 +22,7 @@ export default class LoginComponent {
   errorMessage: string = '';
   
   isRequired(field: 'username' | 'password' ){
-    return isRequired(field, this.loginForm)
+    return isRequiredLogin(field, this.loginForm)
   }
 
   loginForm = this._formBuilder.group<FormLogin>({

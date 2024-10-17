@@ -1,0 +1,16 @@
+.tooltip {
+    position: absolute; /* Color de fondo */
+    color: #333; /* Color del texto */
+    padding: 5px; /* Espaciado */
+    border-radius: 4px; /* Bordes redondeados */
+    z-index: 10; /* Asegúrate de que el tooltip esté por encima de otros elementos */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    visibility: hidden; /* Inicialmente oculto */
+    opacity: 0; /* Inicialmente transparente */
+    transition: visibility 0s, opacity 0.2s linear; /* Transición suave */
+  }
+  
+  .name-cat:hover .tooltip {
+    visibility: visible; /* Muestra el tooltip al pasar el mouse */
+    opacity: 1; /* Hace que el tooltip sea visible */
+  }
