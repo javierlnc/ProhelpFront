@@ -2,6 +2,7 @@
   class="relative overflow-y-hidden overflow-x-auto pb-4 px-4 shadow-md sm:rounded-lg"
   style="height: calc(100vh - 100px)"
 >
+<!-- Header Interno  -->
   <div
     class="flex flex-col sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center pb-4"
   >
@@ -10,20 +11,20 @@
     >
       Usuarios
     </div>
-    <label for="table-search" class="sr-only">Buscar</label>
-    <div class="relative">
+    <!-- Busqueda -->
+    <div class="relative w-full sm:w-auto">
+        <label for="table-search" class="sr-only">Buscar</label>
       <div
-        class="absolute inset-y-0 left-0 rtl:inset-r-0 rtl:right-0 flex items-center ps-3 pointer-events-none"
+        class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
       >
         <svg
-          class="w-4 h-4 text-gray-500 dark:text-gray-400"
-          aria-hidden="true"
+          class="w-4 h-4 text-gray-500"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 20 20"
+          stroke="currentColor"
         >
           <path
-            stroke="currentColor"
             stroke-linecap="round"
             stroke-linejoin="round"
             stroke-width="2"
@@ -35,33 +36,36 @@
         type="text"
         id="table-search"
         placeholder="Buscar categoría"
-        class="block p-2 ps-10 text-sm text-neutral-800 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+        class="block p-2 pl-10 w-80 text-sm text-neutral-800 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
       />
     </div>
   </div>
+<!-- Buttones -->
   <div class="p-4 space-x-4">
     <button class="button-primary">Nueva</button>
     <button class="button-primary">Eliminar</button>
   </div>
-  <table class="w-full text-sm text-left rtl:text-right">
+  <!-- contenedor tabla -->
+  <div class="overflow-auto max-h-[calc(100vh-200px)]">
+    
+  <table class="w-full text-sm text-left">
     <thead class="text-xs text-gray-700 uppercase bg-gray-50">
       <tr>
         <th scope="col" class="p-4">
           <div class="flex items-center">
             <input
               type="checkbox"
-              id="checkbox-all-search"
+              id="checkbox-all"
               class="w-4 h-4 text-lime-300 bg-gray-100 border-gray-300 rounded focus:ring-2 accent-lime-300 focus:ring-lime-500"
             />
-            <label for="checkbox-all-search" class="sr-only">checkbox</label>
+            <label for="checkbox-all-search" class="sr-only">Seleccionar todos</label>
           </div>
         </th>
-
         <th scope="col" class="p-4">Nombre</th>
-        <th scope="col" class="p-4">Area</th>
+        <th scope="col" class="p-4">Área</th>
         <th scope="col" class="p-4">Email</th>
         <th scope="col" class="p-4">Tipo de usuario</th>
-        <th scope="col" class="p-4">accion</th>
+        <th scope="col" class="p-4">acción</th>
       </tr>
     </thead>
     <tbody>
@@ -72,17 +76,17 @@
             <input type="checkbox" id="checkbox-{{i}}"
             class="w-4 h-4 text-lime-300 bg-gray-100 border-gray-300 rounded focus:ring-2 accent-lime-300 focus:ring-lime-500"/>
             
-            <label for="checkbox-{{i}}" class="sr-only"></label>
+            <label for="checkbox-{{i}}" class="sr-only">Seleccionar {{user.name}}</label>
         </div>
         </td>
-        <th scope="row" class="flex items-center px-6 py-4 font-semibold text-gray-800 whitespace-nowrap uppercase">
+        <th scope="row" class="px-6 py-4 font-semibold text-gray-800 whitespace-nowrap uppercase">
             {{user.name}}
         </th>
         <td class="px-6 py-4">{{user.area}}</td>
         <td class="px-6 py-4">{{user.email}}</td>
         <td class="px-6 py-4">
             <div class="flex items-center">
-                <div class="h-2.5 w-2.5 rounded-full me-2" 
+                <div class="h-2.5 w-2.5 rounded-full mr-2" 
                 [ngClass]="{
                     'bg-green-400': user.role === 'ADMIN',
                     'bg-blue-400': user.role === 'TEC',
@@ -92,9 +96,10 @@
             </div>
             </td>
         <td class="px-6 py-4">
-            <a href="#" type="button" data-modal-target="editUserModal" data-modal-show="editUserModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit user</a>
+            <a href="#" data-modal-target="editUserModal" data-modal-show="editUserModal" class="font-medium text-blue-600 hover:underline">Editar</a>
         </td>
       </tr>
     </tbody>
   </table>
+</div>
 </div>
