@@ -18,7 +18,7 @@ import { RouterLink } from '@angular/router';
         opacity: 1
       })),
       transition('open <=> closed', [
-        animate('300ms')
+        animate('500ms')
       ])
     ])
   ],
