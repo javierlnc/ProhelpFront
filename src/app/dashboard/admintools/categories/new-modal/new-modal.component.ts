@@ -1,7 +1,6 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { FormBuilder, FormControl, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { isRequired } from '../../../utils/validators';
+import { isRequired } from '@utils/validators';
 import { CommonModule } from '@angular/common';
 import { CategoriesService } from '../categories.service';
 import { toast } from 'ngx-sonner';

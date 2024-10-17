@@ -1,4 +1,4 @@
-import { AuthService } from './../../auth/login/auth.service';
+import { AuthService } from '@autService';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
@@ -34,7 +34,7 @@ export class CategoriesService {
   private handleError(error: any): Observable<never> {
     // Maneja el error de manera más informativa
     console.error('An error occurred:', error);
-    return throwError('Error en el servicio; intenta nuevamente más tarde.');
+    return throwError(() => new Error('Error en el servicio; intenta nuevamente más tarde.'));
   }
   
 }

@@ -14,6 +14,6 @@ export default [
         
     },
     {
-        path: 'categories', loadComponent: () => import('./categories/categories.component')
+        path: 'categories', loadComponent: () => import('./admintools/categories/categories.component')
     }
 ] as Routes;
