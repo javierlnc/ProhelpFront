@@ -15,5 +15,11 @@ export default [
     },
     {
         path: 'categories', loadComponent: () => import('./admintools/categories/categories.component')
+    },
+    {
+        path: 'resolutions', loadComponent: () => import('./admintools/resolutions/resolutions.component')
+    },
+    {
+        path: 'reports', loadComponent: () => import('./admintools/reports/reports.component')
     }
 ] as Routes;
