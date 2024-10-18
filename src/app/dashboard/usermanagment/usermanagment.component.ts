@@ -1,4 +1,5 @@
 import { UsermanagmentService } from './../usermanagment.service';
+import { NewUserModalComponent } from './new-user-modal/new-user-modal.component';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 export interface User{
@@ -13,12 +14,13 @@ export interface User{
 @Component({
   selector: 'app-usermanagment',
   standalone: true,
-  imports: [CommonModule],
+  imports: [NewUserModalComponent, CommonModule],
   templateUrl: './usermanagment.component.html',
   styleUrl: './usermanagment.component.css'
 })
 export default class UsermanagmentComponent implements OnInit{
-  showModal = false;
+
+  showModal = true;
   currentPage = 1;
   users: User[] = [];
   constructor(private usermanagmentService: UsermanagmentService ){
@@ -45,6 +47,13 @@ export default class UsermanagmentComponent implements OnInit{
 
   getRoleName(abbreviation: string): string {
     return this.roleMap[abbreviation] || abbreviation;  // Retorna el nombre completo o la abreviación si no hay coincidencia
+  }
+  openModal() {
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
   }
  
 
