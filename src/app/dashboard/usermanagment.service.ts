@@ -10,6 +10,12 @@ export class UsermanagmentService {
 
   private readonly _basic_url = "http://localhost:8080/"
   constructor(private http:HttpClient, private authService:AuthService) { }
+  createUserDetails(userDTO:any): Observable<any>{
+    return this.http.post(`${this._basic_url}api/admin/user`, userDTO,{
+      headers: this.createAuthorizationHeader(),
+    }) 
+
+  }
   getAllUsers(pageNumber:number): Observable<any>{
     return this.http.get(`${this._basic_url}api/admin/users/${pageNumber}`,{
       headers: this.createAuthorizationHeader(),
