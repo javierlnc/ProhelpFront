@@ -1,6 +1,6 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { FormBuilder, FormControl, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { isRequired } from '@utils/validators';
+import { isFieldRequired } from '@utils/validators';
 import { CommonModule } from '@angular/common';
 import { CategoriesService } from '../categories.service';
 import { toast } from 'ngx-sonner';
@@ -25,7 +25,7 @@ export class NewModalComponent {
 
 
   isRequired(field: 'name' | 'description' ){
-    return isRequired(field, this.createForm)
+    return isFieldRequired(field, this.createForm)
   }
   createForm = this._formBuilder.group<FormCreate>({
     name: this._formBuilder.control('', Validators.required),

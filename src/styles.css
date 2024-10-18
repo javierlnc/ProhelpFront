@@ -2,9 +2,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-.button-primary{
-    @apply bg-lime-300 text-neutral-800 hover:bg-lime-400 focus:ring-4 focus:outline-none focus:ring-lime-200 font-medium rounded-lg text-sm px-6 py-2.5 transition;
+.button-primary {
+  @apply bg-lime-300 text-neutral-800 hover:bg-lime-400 focus:ring-4 focus:outline-none focus:ring-lime-200 font-medium rounded-lg text-sm px-6 py-2.5 transition;
 }
 .button-secondary {
-    @apply bg-neutral-600 text-neutral-200 hover:bg-neutral-500 focus:ring-4 focus:outline-none focus:ring-neutral-400 font-medium rounded-lg text-sm px-4 py-2.5 transition;
-  }
+  @apply bg-neutral-600 text-neutral-200 hover:bg-neutral-500 focus:ring-4 focus:outline-none focus:ring-neutral-400 font-medium rounded-lg text-sm px-4 py-2.5 transition;
+}
+.input-field {
+  @apply bg-neutral-700 border border-neutral-700 text-gray-200 rounded-lg focus:ring-lime-300 focus:border-lime-300 block w-full p-3;
+}

@@ -1,67 +1,78 @@
-<div tabindex="-1"
-class="fixed inset-0 bg-black bg-opacity-50 md:p-10 flex justify-center items-center">
-   <div class=" relative p-4 w-full max-w-full max-h-full" (click)="$event.stopPropagation()">
-    <div class="relative bg-neutral-800 rounded-lg shadow-sm">
-        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t ">
-            <h3 class="text-lg font-semibold text-gray-200">Crear nuevo usuario</h3>
-            <button class="text-gray-400 p-1.5 bg-transparent hover:bg-lime-200  hover:text-black" >
-                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                </svg>
-            </button>
+<div tabindex="-1" class="fixed inset-0 bg-black bg-opacity-50 md:p-10 flex justify-center items-center">
+    <div class="relative p-4 w-full max-w-2xl max-h-full" (click)="$event.stopPropagation()">
+        <div class="relative bg-neutral-800 rounded-lg shadow-sm">
+            <!-- Header del modal -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                <h3 class="text-lg font-semibold text-gray-200">Crear nuevo usuario</h3>
+                <button class="text-gray-400 p-1.5 bg-transparent hover:bg-lime-200 hover:text-black">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Formulario -->
+            <form class="p-4 md:p-5" >
+                <div class="mb-4">
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-200">Email</label>
+                    <input type="email" id="email" placeholder="Email" formControlName="email"
+                    class="input-field">
+                    <div *ngIf="isRequired('email')" class="text-red-400 text-sm mt-2">El email es obligatorio.</div>
+                </div>
+                <div class="mb-4">
+                    <label for="nombre" class="block mb-2 text-sm font-medium text-gray-200">Nombre</label>
+                    <input type="text" id="nombre" placeholder="Nombre" formControlName="nombre"
+                    class="input-field">
+                    <div *ngIf="isRequired('nombre')" class="text-red-400 text-sm mt-2">El nombre es obligatorio.</div>
+                </div>
+                <div class="mb-4">
+                    <label for="username" class="block mb-2 text-sm font-medium text-gray-200">Username</label>
+                    <input type="text" id="username" placeholder="Username" formControlName="username"
+                    class="input-field">
+                    <div *ngIf="isRequired('username')" class="text-red-400 text-sm mt-2">Se requiere un username.</div>
+                </div>
+
+                <!-- Contraseña y Confirmar Contraseña -->
+                <div class="grid md:grid-cols-2 md:gap-6">
+                    <div class="mb-4">
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-200">Contraseña</label>
+                        <input type="password" id="password" placeholder="Contraseña" formControlName="password"
+                        class="input-field">
+                        <div *ngIf="isRequired('password')" class="text-red-400 text-sm mt-2">La contraseña es obligatoria.</div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="confirmPassword" class="block mb-2 text-sm font-medium text-gray-200">Confirmar contraseña</label>
+                        <input type="password" id="confirmPassword" placeholder="Confirmar contraseña" formControlName="confirmPassword"
+                        class="input-field">
+                        <div *ngIf="isRequired('confirmPassword')" class="text-red-400 text-sm mt-2">Es necesario confirmar la contraseña.</div>
+                        <div *ngIf="passwordsMismatch" class="text-red-400 text-sm mt-2">Las contraseñas no coinciden.</div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 md:gap-6">
+                    <div class="mb-4">
+                        <label for="area" class="block mb-2 text-sm font-medium text-gray-200">Área</label>
+                        <select id="area" formControlName="area" class="input-field">
+                            <!-- Opciones de áreas -->
+                        </select>
+                        <div *ngIf="isRequired('area')" class="text-red-400 text-sm mt-2">Se requiere un área.</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="rol" class="block mb-2 text-sm font-medium text-gray-200">Rol</label>
+                        <select id="rol" formControlName="rol" class="input-field">
+                            <!-- Opciones de roles -->
+                        </select>
+                        <div *ngIf="isRequired('rol')" class="text-red-400 text-sm mt-2">Se requiere un rol.</div>
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="flex items-center justify-between mt-6">
+                    <button type="submit" class="button-primary">Crear Usuario</button>
+                    <button type="button" class="button-secondary" data-modal-hide="progress-modal">Cancelar</button>
+                </div>
+            </form>
         </div>
-        <form action="" class="p-4 md:p-5" >
-            <div class="mb-3">
-                <label for="name" class="block mb-2 text-sm font-medium text-gray-200">Email</label>
-                <input type="text" name="name" id="name" placeholder="Email"  formControlName="name"
-                class="bg-neutral-700 border border-neutral-700 text-gray-200 rounded-lg focus:ring-lime-300 focus:border-lime-300 block w-full p-3">
-                <div *ngIf="isRequired('name')" class="text-red-400 text-sm mt-2">
-                    El email es obligatorio.
-                  </div>
-            </div>
-            <div class="mb-3">
-                <label for="name" class="block mb-2 text-sm font-medium text-gray-200">Nombre</label>
-                <input type="text" name="name" id="name" placeholder="Nombre"  formControlName="name"
-                class="bg-neutral-700 border border-neutral-700 text-gray-200 rounded-lg focus:ring-lime-300 focus:border-lime-300 block w-full p-3">
-                <div *ngIf="isRequired('name')" class="text-red-400 text-sm mt-2">
-                    El nombre es obligatorio.
-                  </div>
-            </div>
-            <div class="mb-3">
-                <label for="" class="block mb-2 text-sm font-medium text-gray-200">Username</label>
-                <input type="text" placeholder="Username" formControlName="description"
-                class="bg-neutral-700 border border-neutral-700 text-gray-200 rounded-lg focus:ring-lime-300 focus:border-lime-300 block w-full p-3"/>
-                <div *ngIf="isRequired('name')" class="text-red-400 text-sm mt-2">
-                    Se requiere crear un username.
-                  </div>
-            </div>
-            <div class="grid md:grid-cols-2 md:gap-6">
-                <div class="mb-3">
-                    <label for="" class="block mb-2 text-sm font-medium text-gray-200">Area</label>
-                    <select type="text" placeholder="Escribe una breve descripción de la categoría" formControlName="description"
-                    class="bg-neutral-700 border border-neutral-700 text-gray-200 rounded-lg focus:ring-lime-300 focus:border-lime-300 block w-full p-3">
-                </select>
-                    <div *ngIf="isRequired('name')" class="text-red-400 text-sm mt-2">
-                        Se requiere una breve descripción.
-                      </div>
-                </div>
-                <div class="mb-3">
-                    <label for="" class="block mb-2 text-sm font-medium text-gray-200">Rol</label>
-                    <select type="text" placeholder="Escribe una breve descripción de la categoría" formControlName="description"
-                    class="bg-neutral-700 border border-neutral-700 text-gray-200 rounded-lg focus:ring-lime-300 focus:border-lime-300 w-full p-3">
-                </select>
-                    <div *ngIf="isRequired('name')" class="text-red-400 text-sm mt-2">
-                        Se requiere una breve descripción.
-                      </div>
-                </div>
-            </div>
-            <div class="flex items-center justify-between mt-6 space-x-4 rtl:space-x-reverse">
-                <button data-modal-hide="progress-modal" type="submit" class="button-primary" 
-                >Crear Categoría</button>
-                <button data-modal-hide="progress-modal" type="button" class="button-secondary" >Cancelar</button>
-            </div>
-        </form>
     </div>
-   </div>
 </div>
- 
