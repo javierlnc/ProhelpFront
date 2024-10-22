@@ -12,7 +12,9 @@
       <div
         class="flex items-center justify-between p-4 md:p-5 border-b rounded-t"
       >
-        <h3 class="text-lg font-semibold text-gray-200">Crear nuevo usuario</h3>
+        <h3 class="text-lg font-semibold text-gray-200">
+          {{ isEdit ? "Editar usuario" : "Crear nuevo usuario" }}
+        </h3>
         <button
           class="text-gray-400 p-1.5 bg-transparent hover:bg-lime-200 hover:text-black"
           (click)="closeModal()"
@@ -207,7 +209,7 @@
             class="button-primary"
             [disabled]="createForm.invalid"
           >
-            Crear Usuario
+            {{ isEdit ? "Actualizar" : "Crear usuario" }}
           </button>
           <button type="button" class="button-secondary" (click)="closeModal()">
             Cancelar

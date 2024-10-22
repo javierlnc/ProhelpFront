@@ -28,7 +28,20 @@ export class UsermanagmentService {
       })
       .pipe(catchError(this.handleError));
   }
-  updateUser(id: number) {}
+  updateUser(id: number, userDTO: any): Observable<any> {
+    return this.http
+      .put(`${this._basic_url}api/admin/users/${id}`, userDTO, {
+        headers: this.createAuthorizationHeader(),
+      })
+      .pipe(catchError(this.handleError));
+  }
+  deleteUser(id: number) {
+    return this.http
+      .delete(`${this._basic_url}api/admin/users/${id}`, {
+        headers: this.createAuthorizationHeader(),
+      })
+      .pipe(catchError(this.handleError));
+  }
 
   createAuthorizationHeader() {
     return new HttpHeaders({
@@ -38,8 +51,6 @@ export class UsermanagmentService {
   }
   private handleError(error: any): Observable<never> {
     console.error('An error occurred:', error);
-    return throwError(
-      () => new Error('Error en el servicio; intenta nuevamente más tarde.')
-    );
+    return throwError(() => new Error(error.message || 'Server Error'));
   }
 }

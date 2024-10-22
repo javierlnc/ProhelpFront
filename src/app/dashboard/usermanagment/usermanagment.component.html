@@ -110,7 +110,7 @@
           </td>
           <td class="px-6 py-4">
             <a
-              href="#"
+              (click)="isEdit(user)"
               data-modal-target="editUserModal"
               data-modal-show="editUserModal"
               class="font-medium text-blue-600 hover:underline"
@@ -123,6 +123,8 @@
   </div>
 </div>
 <app-new-user-modal
+  [userData]="selectUser"
+  [isEdit]="isEditModal"
   *ngIf="showModal"
   (close)="closeModal()"
 ></app-new-user-modal>

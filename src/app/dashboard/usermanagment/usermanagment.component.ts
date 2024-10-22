@@ -19,9 +19,17 @@ export interface User {
   styleUrl: './usermanagment.component.css',
 })
 export default class UsermanagmentComponent implements OnInit {
+  isEdit(user: any) {
+    this.isEditModal = true;
+    this.openModal();
+    console.log(user);
+    this.selectUser = user;
+  }
   showModal = false;
   currentPage = 1;
   users: User[] = [];
+  isEditModal: boolean = false;
+  selectUser: any;
   constructor(private usermanagmentService: UsermanagmentService) {}
   ngOnInit(): void {
     this.getUsers();
@@ -30,9 +38,7 @@ export default class UsermanagmentComponent implements OnInit {
     this.usermanagmentService
       .getAllUsers(this.currentPage - 1)
       .subscribe((res) => {
-        console.log(res);
         this.users = res.userDTOList;
-        console.log(this.users);
       });
   }
   roleMap: { [key: string]: string } = {
@@ -50,6 +56,7 @@ export default class UsermanagmentComponent implements OnInit {
 
   closeModal() {
     this.showModal = false;
+    this.isEditModal = false;
     this.getUsers();
   }
 }

@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  OnInit,
+  Output,
+  Input,
+  SimpleChanges,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -26,6 +34,8 @@ export interface AreaDTO {
 })
 export class NewUserModalComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
+  @Input() isEdit: boolean = false;
+  @Input() userData: any;
 
   areas: AreaDTO[] = [];
   rolesBackend = Object.values(UserRole);
@@ -51,7 +61,25 @@ export class NewUserModalComponent implements OnInit {
       }
     );
   }
+  ngOnChanges(changes: SimpleChanges) {
+    // Si isEdit es true y hay datos del usuario, actualiza el formulario
+    if (this.isEdit && this.userData) {
+      this.createForm.patchValue({
+        email: this.userData.email,
+        name: this.userData.name,
+        username: this.userData.username,
+        areaId: this.userData.area.id,
+        role: this.userData.role,
+      });
 
+      // Si quieres deshabilitar la contraseña en modo edición
+      this.createForm.get('password')?.clearValidators();
+      this.createForm.get('confirmPassword')?.clearValidators();
+    } else {
+      // Resetear el formulario cuando no está en modo edición
+      this.createForm.reset();
+    }
+  }
   ngOnInit(): void {
     this.loadAreas();
   }
@@ -74,28 +102,50 @@ export class NewUserModalComponent implements OnInit {
   }
 
   submitForm(): void {
-    console.log('Valores del formulario:', this.createForm.value);
-    if (this.createForm.invalid) {
-      toast.error('Por favor, completa todos los campos requeridos.');
-      return;
-    }
+    if (this.isEdit && this.userData) {
+      if (this.createForm.invalid) {
+        toast.error('Por favor, completa todos los campos requeridos.');
+        return;
+      }
+      this.usermanagmentService
+        .updateUser(this.userData.id, this.createForm.value)
+        .subscribe({
+          next: () => {
+            this.close.emit();
+            const { username } = this.createForm.value;
+            toast.success(`Usuario "${username}" actualizado con éxito`);
+          },
+          error: (err) => {
+            const errorMsg =
+              err?.error?.message || 'Error al actualizar el usuario';
+            console.log(errorMsg);
+            toast.error(errorMsg);
+          },
+        });
+    } else {
+      if (this.createForm.invalid) {
+        toast.error('Por favor, completa todos los campos requeridos.');
+        return;
+      }
 
-    this.usermanagmentService
-      .createUserDetails(this.createForm.value)
-      .subscribe({
-        next: () => {
-          this.close.emit();
-          const { username } = this.createForm.value;
-          toast.success(`Usuario "${username}" creado con éxito`);
-        },
-        error: (err) => {
-          const errorMsg = err?.error?.message || 'Error al crear el usuario';
-          toast.error(errorMsg);
-        },
-      });
+      this.usermanagmentService
+        .createUserDetails(this.createForm.value)
+        .subscribe({
+          next: () => {
+            this.close.emit();
+            const { username } = this.createForm.value;
+            toast.success(`Usuario "${username}" creado con éxito`);
+          },
+          error: (err) => {
+            const errorMsg = err?.error?.message || 'Error al crear el usuario';
+            toast.error(errorMsg);
+          },
+        });
+    }
   }
 
   closeModal(): void {
+    this.isEdit = false;
     this.close.emit();
   }
 
