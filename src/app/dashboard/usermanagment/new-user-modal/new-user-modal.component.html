@@ -57,6 +57,15 @@
           <div *ngIf="isRequired('email')" class="text-red-400 text-sm mt-2">
             El email es obligatorio.
           </div>
+          <div
+            *ngIf="
+              createForm.get('email')?.hasError('email') &&
+              createForm.get('email')?.touched
+            "
+            class="text-red-400 text-sm mt-2"
+          >
+            El formato del email es incorrecto.
+          </div>
         </div>
         <div class="mb-4">
           <label
@@ -113,6 +122,15 @@
               class="text-red-400 text-sm mt-2"
             >
               La contraseña es obligatoria.
+            </div>
+            <div
+              *ngIf="
+                createForm.get('password')?.hasError('minlength') &&
+                createForm.get('password')?.touched
+              "
+              class="text-red-400 text-sm mt-2"
+            >
+              La contraseña debe tener al menos 8 caracteres.
             </div>
           </div>
           <div class="mb-4">

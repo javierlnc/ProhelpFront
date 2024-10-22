@@ -1,4 +1,3 @@
-import { passwordsMatchValidator } from './../../../utils/validators';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import {
@@ -10,61 +9,77 @@ import {
 import { UsermanagmentService } from '../../usermanagment.service';
 import { toast } from 'ngx-sonner';
 import { isFieldRequired } from '@utils/validators';
+import { passwordsMatchValidator } from './../../../utils/validators';
 import { rolesMapping, UserRole } from '@utils/roles-mapping';
+
 export interface AreaDTO {
   id: number;
   name: string;
 }
+
 @Component({
   selector: 'app-new-user-modal',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './new-user-modal.component.html',
-  styleUrl: './new-user-modal.component.css',
+  styleUrls: ['./new-user-modal.component.css'],
 })
 export class NewUserModalComponent implements OnInit {
-  ngOnInit(): void {
-    this.usermanagmentService.getAllAreas().subscribe(
-      (data: AreaDTO[]) => {
-        this.areas = data;
-        console.log('areas' + this.areas);
+  @Output() close = new EventEmitter<void>();
+
+  areas: AreaDTO[] = [];
+  rolesBackend = Object.values(UserRole);
+  rolesEnum = rolesMapping;
+  createForm: FormGroup;
+
+  private usermanagmentService = inject(UsermanagmentService);
+  private formBuilder = inject(FormBuilder);
+
+  constructor() {
+    this.createForm = this.formBuilder.group(
+      {
+        email: ['', [Validators.required, Validators.email]],
+        name: ['', Validators.required],
+        username: ['', Validators.required],
+        password: ['', [Validators.required, Validators.minLength(8)]],
+        confirmPassword: ['', Validators.required],
+        areaId: ['', Validators.required],
+        role: ['', Validators.required],
       },
-      (error) => {
-        console.error('Error al cargar las áreas', error);
+      {
+        validators: passwordsMatchValidator('password', 'confirmPassword'),
       }
     );
   }
-  @Output() close = new EventEmitter<void>();
-  private formBuilder = inject(FormBuilder);
-  private usermanagmentService = inject(UsermanagmentService);
-  rolesEnum = rolesMapping;
-  areas: AreaDTO[] = [];
-  rolesBackend = Object.values(UserRole);
-  errorMessage: string = '';
-  createForm: FormGroup = this.formBuilder.group(
-    {
-      email: ['', Validators.required],
-      name: ['', Validators.required],
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
-      areaId: ['', Validators.required],
-      role: ['', Validators.required],
-    },
-    {
-      validator: passwordsMatchValidator('password', 'confirmPassword'),
-    }
-  );
+
+  ngOnInit(): void {
+    this.loadAreas();
+  }
+
+  private loadAreas(): void {
+    this.usermanagmentService.getAllAreas().subscribe(
+      (data: AreaDTO[]) => {
+        this.areas = data;
+      },
+      (error) => {
+        toast.error(
+          'No se pudieron cargar las áreas. Inténtalo de nuevo más tarde.'
+        );
+      }
+    );
+  }
+
   isRequired(field: string): boolean {
     return isFieldRequired(field, this.createForm);
   }
+
   submitForm(): void {
-    debugger;
-    console.log(this.createForm.value);
+    console.log('Valores del formulario:', this.createForm.value);
     if (this.createForm.invalid) {
       toast.error('Por favor, completa todos los campos requeridos.');
       return;
     }
+
     this.usermanagmentService
       .createUserDetails(this.createForm.value)
       .subscribe({
@@ -79,9 +94,11 @@ export class NewUserModalComponent implements OnInit {
         },
       });
   }
+
   closeModal(): void {
     this.close.emit();
   }
+
   get passwordsMismatch() {
     return this.createForm.hasError('passwordsMismatch');
   }

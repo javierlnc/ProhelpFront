@@ -50,5 +50,6 @@ export default class UsermanagmentComponent implements OnInit {
 
   closeModal() {
     this.showModal = false;
+    this.getUsers();
   }
 }
