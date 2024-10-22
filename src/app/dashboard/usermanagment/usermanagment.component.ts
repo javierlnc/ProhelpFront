@@ -2,13 +2,13 @@ import { UsermanagmentService } from './../usermanagment.service';
 import { NewUserModalComponent } from './new-user-modal/new-user-modal.component';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-export interface User{
-  id:number,
-  username:string,
-  email:string,
-  name:string,
-  role:string,
-  area:string,
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  name: string;
+  role: string;
+  area: { areaDTO: { id: number; name: string } };
 }
 
 @Component({
@@ -16,20 +16,17 @@ export interface User{
   standalone: true,
   imports: [NewUserModalComponent, CommonModule],
   templateUrl: './usermanagment.component.html',
-  styleUrl: './usermanagment.component.css'
+  styleUrl: './usermanagment.component.css',
 })
-export default class UsermanagmentComponent implements OnInit{
-
-  showModal = true;
+export default class UsermanagmentComponent implements OnInit {
+  showModal = false;
   currentPage = 1;
   users: User[] = [];
-  constructor(private usermanagmentService: UsermanagmentService ){
-
-  }
+  constructor(private usermanagmentService: UsermanagmentService) {}
   ngOnInit(): void {
     this.getUsers();
   }
-  getUsers(){
+  getUsers() {
     this.usermanagmentService
       .getAllUsers(this.currentPage - 1)
       .subscribe((res) => {
@@ -37,16 +34,15 @@ export default class UsermanagmentComponent implements OnInit{
         this.users = res.userDTOList;
         console.log(this.users);
       });
-
   }
   roleMap: { [key: string]: string } = {
-    'ADMIN': 'Administrador',
-    'TEC': 'Técnico',
-    'GEN': 'General'
+    ADMIN: 'Administrador',
+    TEC: 'Técnico',
+    GEN: 'General',
   };
 
   getRoleName(abbreviation: string): string {
-    return this.roleMap[abbreviation] || abbreviation;  // Retorna el nombre completo o la abreviación si no hay coincidencia
+    return this.roleMap[abbreviation] || abbreviation; // Retorna el nombre completo o la abreviación si no hay coincidencia
   }
   openModal() {
     this.showModal = true;
@@ -55,6 +51,4 @@ export default class UsermanagmentComponent implements OnInit{
   closeModal() {
     this.showModal = false;
   }
- 
-
 }

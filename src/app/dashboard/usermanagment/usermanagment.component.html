@@ -2,7 +2,7 @@
   class="relative overflow-y-hidden overflow-x-auto pb-4 px-4 shadow-md sm:rounded-lg"
   style="height: calc(100vh - 100px)"
 >
-<!-- Header Interno  -->
+  <!-- Header Interno  -->
   <div
     class="flex flex-col sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center pb-4"
   >
@@ -13,7 +13,7 @@
     </div>
     <!-- Busqueda -->
     <div class="relative w-full sm:w-auto">
-        <label for="table-search" class="sr-only">Buscar</label>
+      <label for="table-search" class="sr-only">Buscar</label>
       <div
         class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
       >
@@ -40,67 +40,89 @@
       />
     </div>
   </div>
-<!-- Buttones -->
+  <!-- Buttones -->
   <div class="p-4 space-x-4">
-    <button class="button-primary">Nueva</button>
+    <button class="button-primary" (click)="openModal()">Nueva</button>
     <button class="button-primary">Eliminar</button>
   </div>
   <!-- contenedor tabla -->
   <div class="overflow-auto max-h-[calc(100vh-200px)]">
-    
-  <table class="w-full text-sm text-left">
-    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-      <tr>
-        <th scope="col" class="p-4">
-          <div class="flex items-center">
-            <input
-              type="checkbox"
-              id="checkbox-all"
-              class="w-4 h-4 text-lime-300 bg-gray-100 border-gray-300 rounded focus:ring-2 accent-lime-300 focus:ring-lime-500"
-            />
-            <label for="checkbox-all-search" class="sr-only">Seleccionar todos</label>
-          </div>
-        </th>
-        <th scope="col" class="p-4">Nombre</th>
-        <th scope="col" class="p-4">Área</th>
-        <th scope="col" class="p-4">Email</th>
-        <th scope="col" class="p-4">Tipo de usuario</th>
-        <th scope="col" class="p-4">acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of users; let i = index"
-      class="border -b hover:bg-gray-50">
-        <td class="w-4 p-4">
-          <div>
-            <input type="checkbox" id="checkbox-{{i}}"
-            class="w-4 h-4 text-lime-300 bg-gray-100 border-gray-300 rounded focus:ring-2 accent-lime-300 focus:ring-lime-500"/>
-            
-            <label for="checkbox-{{i}}" class="sr-only">Seleccionar {{user.name}}</label>
-        </div>
-        </td>
-        <th scope="row" class="px-6 py-4 font-semibold text-gray-800 whitespace-nowrap uppercase">
-            {{user.name}}
-        </th>
-        <td class="px-6 py-4">{{user.area}}</td>
-        <td class="px-6 py-4">{{user.email}}</td>
-        <td class="px-6 py-4">
+    <table class="w-full text-sm text-left">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+        <tr>
+          <th scope="col" class="p-4">
             <div class="flex items-center">
-                <div class="h-2.5 w-2.5 rounded-full mr-2" 
-                [ngClass]="{
-                    'bg-green-400': user.role === 'ADMIN',
-                    'bg-blue-400': user.role === 'TEC',
-                    'bg-yellow-400': user.role === 'GEN'
-                  }" ></div>
-                {{getRoleName(user.role) }}
+              <input
+                type="checkbox"
+                id="checkbox-all"
+                class="w-4 h-4 text-lime-300 bg-gray-100 border-gray-300 rounded focus:ring-2 accent-lime-300 focus:ring-lime-500"
+              />
+              <label for="checkbox-all-search" class="sr-only"
+                >Seleccionar todos</label
+              >
             </div>
-            </td>
-        <td class="px-6 py-4">
-            <a href="#" data-modal-target="editUserModal" data-modal-show="editUserModal" class="font-medium text-blue-600 hover:underline">Editar</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          </th>
+          <th scope="col" class="p-4">Nombre</th>
+          <th scope="col" class="p-4">Área</th>
+          <th scope="col" class="p-4">Email</th>
+          <th scope="col" class="p-4">Tipo de usuario</th>
+          <th scope="col" class="p-4">acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let user of users; let i = index"
+          class="border -b hover:bg-gray-50"
+        >
+          <td class="w-4 p-4">
+            <div>
+              <input
+                type="checkbox"
+                id="checkbox-{{ i }}"
+                class="w-4 h-4 text-lime-300 bg-gray-100 border-gray-300 rounded focus:ring-2 accent-lime-300 focus:ring-lime-500"
+              />
+
+              <label for="checkbox-{{ i }}" class="sr-only"
+                >Seleccionar {{ user.name }}</label
+              >
+            </div>
+          </td>
+          <th
+            scope="row"
+            class="px-6 py-4 font-semibold text-gray-800 whitespace-nowrap uppercase"
+          >
+            {{ user.name }}
+          </th>
+          <td class="px-6 py-4">{{ user.area.areaDTO.name }}</td>
+          <td class="px-6 py-4">{{ user.email }}</td>
+          <td class="px-6 py-4">
+            <div class="flex items-center">
+              <div
+                class="h-2.5 w-2.5 rounded-full mr-2"
+                [ngClass]="{
+                  'bg-green-400': user.role === 'ADMIN',
+                  'bg-blue-400': user.role === 'TEC',
+                  'bg-yellow-400': user.role === 'GEN'
+                }"
+              ></div>
+              {{ getRoleName(user.role) }}
+            </div>
+          </td>
+          <td class="px-6 py-4">
+            <a
+              href="#"
+              data-modal-target="editUserModal"
+              data-modal-show="editUserModal"
+              class="font-medium text-blue-600 hover:underline"
+              >Editar</a
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
-</div>
-<app-new-user-modal  *ngIf="showModal" (close)="closeModal()"></app-new-user-modal>
+<app-new-user-modal
+  *ngIf="showModal"
+  (close)="closeModal()"
+></app-new-user-modal>
