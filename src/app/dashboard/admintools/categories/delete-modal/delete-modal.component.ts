@@ -1,6 +1,7 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { UsermanagmentService } from '../usermanagment.service';
 import { toast } from 'ngx-sonner';
+import { CategoriesService } from '../categories.service';
+import { Category } from './../categories.component';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-delete-modal',
@@ -11,17 +12,17 @@ import { toast } from 'ngx-sonner';
 })
 export class DeleteModalComponent {
   @Output() closeDelete = new EventEmitter<void>();
-  @Input() userData: any;
-  private usermanagmentService = inject(UsermanagmentService);
+  @Input() categoryData: any;
+  private categoriesService = inject(CategoriesService);
 
   closeModal(): void {
     this.closeDelete.emit();
   }
-  deletcUser() {
-    this.usermanagmentService.deleteUser(this.userData.id).subscribe({
+  deletcCategory() {
+    this.categoriesService.deleteCategory(this.categoryData.id).subscribe({
       next: () => {
         this.closeDelete.emit();
-        toast.success(` ha sido eliminado`);
+        toast.success(`Categoría eliminada`);
       },
       error: (err) => {
         const errorMsg = err?.error?.message || 'Error al eliminar el usuario';

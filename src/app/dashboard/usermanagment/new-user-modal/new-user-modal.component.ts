@@ -14,7 +14,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { UsermanagmentService } from '../../usermanagment.service';
+import { UsermanagmentService } from '../usermanagment.service';
 import { toast } from 'ngx-sonner';
 import { isFieldRequired } from '@utils/validators';
 import { passwordsMatchValidator } from './../../../utils/validators';
