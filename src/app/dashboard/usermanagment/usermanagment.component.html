@@ -46,24 +46,29 @@
   </div>
   <!-- contenedor tabla -->
   <div class="overflow-auto max-h-[calc(100vh-200px)]">
+    <!-- Inicio Tabla -->
     <table class="w-full text-sm text-left">
+      <!-- Inicio Cabecera -->
       <thead class="text-xs text-gray-700 uppercase bg-gray-50">
         <tr>
           <th scope="col" class="p-4">Nombre</th>
           <th scope="col" class="p-4">Área</th>
           <th scope="col" class="p-4">Email</th>
           <th scope="col" class="p-4">Tipo de usuario</th>
-          <th scope="col" class="p-4">acción</th>
+          <th scope="col" class="p-4">Username</th>
+          <th scope="col" class="p-4 text-center">acción</th>
         </tr>
       </thead>
+      <!-- Fin Cabecera -->
+      <!-- contenido tabla -->
       <tbody>
         <tr
           *ngFor="let user of users; let i = index"
-          class="border -b hover:bg-gray-50"
+          class="border-b hover:bg-gray-50"
         >
           <th
             scope="row"
-            class="px-6 py-4 font-semibold text-gray-800 whitespace-nowrap uppercase"
+            class="px-6 py-4 font-semibold text-neutral-700 whitespace-nowrap uppercase"
           >
             {{ user.name }}
           </th>
@@ -82,8 +87,9 @@
               {{ getRoleName(user.role) }}
             </div>
           </td>
+          <td class="px-6 py-4">{{ user.username }}</td>
           <td class="px-6 py-4">
-            <div class="flex justify-end gap-6">
+            <div class="flex justify-center gap-6">
               <a
                 (click)="isEdit(user)"
                 data-modal-target="editUserModal"

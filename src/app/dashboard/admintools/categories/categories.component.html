@@ -43,26 +43,26 @@
     <button class="button-primary" (click)="openModal()">Nueva</button>
   </div>
   <!-- Inicio Tabla -->
-  <table class="w-full">
+  <table class="w-full text-sm text-left">
     <!-- Inicio Cabecera -->
-    <thead class="text-sm border-b text-neutral-900 bg-gray-50">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
       <tr>
         <th scope="col" class="px-6 py-3">Categoría</th>
-        <th scope="col" class="px-6 py-3">Acción</th>
+        <th scope="col" class="px-6 py-3 text-center">Acción</th>
       </tr>
     </thead>
     <!-- Fin Cabecera -->
     <!-- contenido tabla -->
     <tbody>
-      <tr
-        class="hover:bg-lime-100 border-b border-neutral-500"
-        *ngFor="let category of categories"
-      >
-        <th scope="row" class="px-2 py-4 font-medium whitespace-nowrap">
+      <tr class="border-b hover:bg-gray-50" *ngFor="let category of categories">
+        <th
+          scope="row"
+          class="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap"
+        >
           {{ category.name }}
         </th>
-        <td class="px-6 py-4 text-center">
-          <div class="flex justify-end gap-6">
+        <td class="px-6 py-4">
+          <div class="flex justify-center gap-6">
             <a
               (click)="isEdit(category)"
               data-modal-target="editUserModal"
