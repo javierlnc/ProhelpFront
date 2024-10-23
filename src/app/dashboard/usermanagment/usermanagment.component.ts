@@ -2,6 +2,7 @@ import { UsermanagmentService } from './../usermanagment.service';
 import { NewUserModalComponent } from './new-user-modal/new-user-modal.component';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 export interface User {
   id: number;
   username: string;
@@ -14,22 +15,18 @@ export interface User {
 @Component({
   selector: 'app-usermanagment',
   standalone: true,
-  imports: [NewUserModalComponent, CommonModule],
+  imports: [NewUserModalComponent, CommonModule, DeleteModalComponent],
   templateUrl: './usermanagment.component.html',
   styleUrl: './usermanagment.component.css',
 })
 export default class UsermanagmentComponent implements OnInit {
-  isEdit(user: any) {
-    this.isEditModal = true;
-    this.openModal();
-    console.log(user);
-    this.selectUser = user;
-  }
   showModal = false;
+  showDeleteModal = false;
   currentPage = 1;
   users: User[] = [];
   isEditModal: boolean = false;
   selectUser: any;
+  delectUser: any;
   constructor(private usermanagmentService: UsermanagmentService) {}
   ngOnInit(): void {
     this.getUsers();
@@ -57,6 +54,17 @@ export default class UsermanagmentComponent implements OnInit {
   closeModal() {
     this.showModal = false;
     this.isEditModal = false;
+    this.delectUser = '';
+    this.showDeleteModal = false;
     this.getUsers();
+  }
+  isEdit(user: any) {
+    this.isEditModal = true;
+    this.openModal();
+    this.selectUser = user;
+  }
+  deleteUser(user: any) {
+    this.showDeleteModal = true;
+    this.delectUser = user;
   }
 }

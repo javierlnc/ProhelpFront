@@ -118,7 +118,6 @@ export class NewUserModalComponent implements OnInit {
           error: (err) => {
             const errorMsg =
               err?.error?.message || 'Error al actualizar el usuario';
-            console.log(errorMsg);
             toast.error(errorMsg);
           },
         });
