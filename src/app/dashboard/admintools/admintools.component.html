@@ -1,0 +1,31 @@
+<div class="flex px-5 py-3 text-neutral-800 rounded-lg shadow-xl">
+  Herramientas
+</div>
+
+<div class="mt-8 flex flex-wrap space-x-0 space-y-2 md:space-x-4 md:space-y-0">
+  <app-card
+    title={{copies[0]?.title}}
+    description={{copies[0]?.description}}
+    link='/dashboard/categories'
+    copyButton="Gestionar"
+    class="flex-1 bg-white shadow rounded-t-lg rounded-lg md:w-1/2"
+  >
+  </app-card>
+  <app-card
+    title={{copies[1]?.title}}
+    description={{copies[1]?.description}}
+    link="/dashboard/resolutions"
+    copyButton="Gestionar"
+    class="flex-1 bg-white shadow rounded-t-lg rounded-lg md:w-1/2"
+  >
+  </app-card>
+</div>
+<div class="mt-8 flex flex-wrap space-x-0 space-y-2 md:space-x-4 md:space-y-0">
+  <app-card
+    title={{copies[2]?.title}}
+    description={{copies[2]?.description}}
+    copyButton="Generar"
+    link="/dashboard/reports"
+    class="flex-1 bg-white shadow rounded-t-lg rounded-lg md:w-1/2"
+  ></app-card>
+</div>

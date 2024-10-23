@@ -2,3 +2,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.button-primary{
+    @apply bg-lime-300 text-neutral-800 hover:bg-lime-400 focus:ring-4 focus:outline-none focus:ring-lime-200 font-medium rounded-lg text-sm px-6 py-2.5 transition;
+}
+.button-secondary {
+    @apply bg-neutral-600 text-neutral-200 hover:bg-neutral-500 focus:ring-4 focus:outline-none focus:ring-neutral-400 font-medium rounded-lg text-sm px-4 py-2.5 transition;
+  }

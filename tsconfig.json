@@ -3,6 +3,12 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@utils/*":["src/app/utils/*"],
+      "@layout/*":["src/app/layout/*"],
+      "@autService":["src/app/auth/login/auth.service.ts"]
+    },
     "outDir": "./dist/out-tsc",
     "strict": true,
     "noImplicitOverride": true,
