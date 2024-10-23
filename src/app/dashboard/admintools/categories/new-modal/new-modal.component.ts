@@ -1,14 +1,10 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
-import { FormBuilder, FormControl, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { isRequired } from '@utils/validators';
+import { FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { isFieldRequired } from '@utils/validators';
 import { CommonModule } from '@angular/common';
 import { CategoriesService } from '../categories.service';
 import { toast } from 'ngx-sonner';
 
-interface FormCreate{
-  name: FormControl<string | null >,
-  description: FormControl<string | null>
-}
 @Component({
   selector: 'app-new-modal',
   standalone: true,
@@ -18,39 +14,36 @@ interface FormCreate{
 })
 export class NewModalComponent {
   @Output() close = new EventEmitter<void>();
-  private _formBuilder = inject(FormBuilder);
-  private _categoriesService = inject(CategoriesService)
+  private formBuilder = inject(FormBuilder);
+  private categoriesService = inject(CategoriesService);
+
   errorMessage: string = '';
-  
-
-
-  isRequired(field: 'name' | 'description' ){
-    return isRequired(field, this.createForm)
-  }
-  createForm = this._formBuilder.group<FormCreate>({
-    name: this._formBuilder.control('', Validators.required),
-    description: this._formBuilder.control('', Validators.required)
+  createForm: FormGroup = this.formBuilder.group({
+    name: ['', Validators.required],
+    description: ['', Validators.required]
   });
-  submitForm(){
-    if(this.createForm.invalid){
+  isRequired(field: 'name' | 'description'): boolean {
+    return isFieldRequired(field, this.createForm);
+  }
+  submitForm(): void {
+    if (this.createForm.invalid) {
       toast.error('Por favor, completa todos los campos requeridos.');
       return;
     }
-    this._categoriesService.createCategoryDetails(this.createForm.value).subscribe({
-      next: ()=>{
-        this.close.emit();
-        const { name} = this.createForm.value;
-        toast.success(`Categoría "${name}" registrada con éxito`);
 
+    this.categoriesService.createCategoryDetails(this.createForm.value).subscribe({
+      next: () => {
+        this.close.emit();
+        const { name } = this.createForm.value;
+        toast.success(`Categoría "${name}" registrada con éxito`);
       },
-      error: (error) => {
-        toast.error(error)
+      error: (err) => {
+        const errorMsg = err?.error?.message || 'Error al crear la categoría';
+        toast.error(errorMsg);
       }
     });
-
   }
-  closeModal() {
-    this.close.emit();  // Emitimos el evento para cerrar el modal
+  closeModal(): void {
+    this.close.emit();  
   }
-
 }

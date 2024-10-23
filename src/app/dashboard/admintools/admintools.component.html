@@ -2,30 +2,29 @@
   Herramientas
 </div>
 
-<div class="mt-8 flex flex-wrap space-x-0 space-y-2 md:space-x-4 md:space-y-0">
+<div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2">
   <app-card
-    title={{copies[0]?.title}}
-    description={{copies[0]?.description}}
-    link='/dashboard/categories'
+    title="{{copies[0]?.title}}"
+    description="{{copies[0]?.description}}"
+    link="/dashboard/categories"
     copyButton="Gestionar"
-    class="flex-1 bg-white shadow rounded-t-lg rounded-lg md:w-1/2"
-  >
-  </app-card>
+    class="bg-white shadow rounded-lg"
+  ></app-card>
   <app-card
-    title={{copies[1]?.title}}
-    description={{copies[1]?.description}}
+    title="{{copies[1]?.title}}"
+    description="{{copies[1]?.description}}"
     link="/dashboard/resolutions"
     copyButton="Gestionar"
-    class="flex-1 bg-white shadow rounded-t-lg rounded-lg md:w-1/2"
-  >
-  </app-card>
-</div>
-<div class="mt-8 flex flex-wrap space-x-0 space-y-2 md:space-x-4 md:space-y-0">
-  <app-card
-    title={{copies[2]?.title}}
-    description={{copies[2]?.description}}
+    class="bg-white shadow rounded-lg"
+  ></app-card>
+  <div class="col-span-1 flex justify-center md:col-span-2 lg:col-start-1 lg:col-end-3 lg:row-start-2">
+    <app-card
+    title="{{copies[2]?.title}}"
+    description="{{copies[2]?.description}}"
     copyButton="Generar"
     link="/dashboard/reports"
-    class="flex-1 bg-white shadow rounded-t-lg rounded-lg md:w-1/2"
+    class="bg-white shadow rounded-lg"
   ></app-card>
+  </div>
+  
 </div>

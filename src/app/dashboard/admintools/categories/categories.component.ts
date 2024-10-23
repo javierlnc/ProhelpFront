@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { NewModalComponent } from './new-modal/new-modal.component';
 import { CategoriesService } from './categories.service';
 export interface Category {
-  id: number; // o cualquier tipo que uses
-  name: string; // o cualquier otro campo que tenga la categoría
-  description?: string; // opcional si lo tienes
+  id: number;
+  name: string;
+  description: string; 
 }
 @Component({
   selector: 'app-categories',

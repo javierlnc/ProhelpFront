@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NgxSonnerToaster} from 'ngx-sonner';
+import { NgxSonnerToaster } from 'ngx-sonner';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,NgxSonnerToaster,],
+  imports: [RouterOutlet, NgxSonnerToaster],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   ngOnInit(): void {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
- 
   }
-  title = 'front-app';
+  title = 'ProHelp';
 }

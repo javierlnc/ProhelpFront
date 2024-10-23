@@ -21,5 +21,8 @@ export default [
     },
     {
         path: 'reports', loadComponent: () => import('./admintools/reports/reports.component')
+    },
+    {
+        path:'usermanagment', loadComponent: () => import('./usermanagment/usermanagment.component')
     }
 ] as Routes;

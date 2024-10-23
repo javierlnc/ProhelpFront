@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { toast } from 'ngx-sonner';
 import { catchError, Observable, throwError, tap } from 'rxjs';
 
 export interface AuthResponse {
@@ -11,10 +12,9 @@ export interface AuthResponse {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  
   private _apiUrl = 'http://localhost:8080/api/auth';
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -22,10 +22,16 @@ export class AuthService {
   login(username: string, password: string): Observable<AuthResponse> {
     const loginData = { username, password };
 
-    return this.http.post<AuthResponse>(`${this._apiUrl}/login`, loginData).pipe(
-      tap(response => this.setSession(response)),
-      catchError(error => this.handleError(error))
-    );
+    return this.http
+      .post<AuthResponse>(`${this._apiUrl}/login`, loginData)
+      .pipe(
+        tap((response) => {
+          this.setSession(response), console.log(response);
+        }),
+        catchError((error) => {
+          return this.handleError(error);
+        })
+      );
   }
 
   logout(): void {
@@ -41,11 +47,11 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  getUser(){
+  getUser() {
     const user = {
       username: localStorage.getItem('user'),
       rol: localStorage.getItem('role'),
-      userId: Number(localStorage.getItem('userId'))
+      userId: Number(localStorage.getItem('userId')),
     };
 
     return user.username ? user : null; // Devuelve el objeto de usuario si el nombre está presente
@@ -59,12 +65,18 @@ export class AuthService {
   }
 
   private handleError(error: any): Observable<never> {
-    if (error.status === 401) {
-      return throwError(() => new Error('Credenciales incorrectas'));
+    let errorMessage = 'Error por defecto.';
+
+    if (error.error && error.message) {
+      // Si el backend envía un mensaje de error personalizado
+      errorMessage = error.error.details;
+    } else if (error.status === 401) {
+      errorMessage = 'Credenciales incorrectas';
     } else if (error.status === 0) {
-      return throwError(() => new Error('No se pudo conectar con el servidor. Verifica tu conexión a Internet.'));
-    } else {
-      return throwError(() => new Error('Ocurrió un error inesperado.'));
+      errorMessage =
+        'No se pudo conectar con el servidor. Verifica tu conexión a Internet.';
     }
+
+    return throwError(() => new Error(errorMessage));
   }
 }
