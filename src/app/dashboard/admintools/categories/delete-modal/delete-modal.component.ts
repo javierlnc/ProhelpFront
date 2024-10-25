@@ -1,6 +1,5 @@
 import { toast } from 'ngx-sonner';
 import { CategoriesService } from '../categories.service';
-import { Category } from './../categories.component';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 
 @Component({

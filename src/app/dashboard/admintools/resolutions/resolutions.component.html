@@ -1,1 +1,70 @@
-<p>resolution works!</p>
+<div
+  class="relative overflow-y-auto overflow-x-auto pb-4 px-4 shadow-md sm:rounded-lg"
+  style="height: calc(100vh - 100px)"
+>
+  <div
+    class="flex flex-col sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center pb-4"
+  >
+    <div
+      class="inline-flex items-center text-neutral-800 font-medium rounded-lg text-lg px-3 py-1.5"
+    >
+      Resoluciones
+    </div>
+    <label for="table-search" class="sr-only">Buscar</label>
+    <div class="relative">
+      <div
+        class="absolute inset-y-0 left-0 rtl:inset-r-0 rtl:right-0 flex items-center ps-3 pointer-events-none"
+      >
+        <svg
+          class="w-4 h-4 text-gray-500 dark:text-gray-400"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 20 20"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+          />
+        </svg>
+      </div>
+      <input
+        type="text"
+        id="table-search"
+        placeholder="Buscar categoría"
+        class="block p-2 ps-10 text-sm text-neutral-800 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+  </div>
+  <div class="p-4 space-x-4">
+    <button class="button-primary" (click)="openModal()">Nueva</button>
+  </div>
+  <div class="container-card p-4 flex justify-center gap-10 flex-wrap">
+    <app-card-resolution
+      *ngFor="let resolution of resolutions"
+      [title]="resolution.name"
+      [description]="resolution.description"
+      [resolution]="resolution"
+      (edit)="isEdit($event)"
+      (delete)="deleteResolution($event)"
+      (close)="closeModal()"
+    ></app-card-resolution>
+  </div>
+  <app-pagination [totalShowing]="resolutions.length"></app-pagination>
+</div>
+<app-nrmodal
+  *ngIf="showModal"
+  (close)="closeModal()"
+  [isEdit]="isEditModal"
+  [resolutionData]="resolutionEdit"
+>
+</app-nrmodal>
+<app-drmodal
+  *ngIf="isDeleteModal"
+  (close)="closeModal()"
+  [resolutionData]="resolutionDeleted"
+>
+</app-drmodal>
