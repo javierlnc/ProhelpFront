@@ -1,4 +1,4 @@
-import { UsermanagmentService } from './../usermanagment.service';
+import { UsermanagmentService } from './usermanagment.service';
 import { NewUserModalComponent } from './new-user-modal/new-user-modal.component';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';

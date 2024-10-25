@@ -6,31 +6,30 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { ResolutionsService } from '../../resolutions.service';
 import {
   FormBuilder,
-  Validators,
   FormGroup,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
-import { isFieldRequired } from '@utils/validators';
 import { CommonModule } from '@angular/common';
-import { CategoriesService } from '../categories.service';
+import { isFieldRequired } from '@utils/validators';
 import { toast } from 'ngx-sonner';
 
 @Component({
-  selector: 'app-new-modal',
+  selector: 'app-nrmodal',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './new-modal.component.html',
-  styleUrl: './new-modal.component.css',
+  templateUrl: './new-resolution-modal.component.html',
+  styleUrl: './new-resolution-modal.component.css',
 })
-export class NewModalComponent {
+export class NewResolutionModalComponent {
   @Output() close = new EventEmitter<void>();
   @Input() isEdit: boolean = false;
-  @Input() categoryData: any;
+  @Input() resolutionData: any;
   private formBuilder = inject(FormBuilder);
-  private categoriesService = inject(CategoriesService);
-
+  private reslutionsService = inject(ResolutionsService);
   errorMessage: string = '';
   createForm: FormGroup = this.formBuilder.group({
     name: ['', Validators.required],
@@ -39,26 +38,18 @@ export class NewModalComponent {
   isRequired(field: 'name' | 'description'): boolean {
     return isFieldRequired(field, this.createForm);
   }
-  ngOnChanges(changes: SimpleChanges) {
-    if (this.isEdit && this.categoryData) {
-      this.createForm.patchValue({
-        name: this.categoryData.name,
-        description: this.categoryData.description,
-      });
-    }
-  }
-  submitForm(): void {
-    if (this.isEdit && this.categoryData) {
+  submitForm() {
+    if (this.isEdit && this.resolutionData) {
       if (this.createForm.invalid) {
         toast.error('Por favor, completa todos los campos requeridos.');
         return;
       }
-      this.categoriesService
-        .updateCategory(this.categoryData.id, this.createForm.value)
+      this.reslutionsService
+        .updateResolution(this.resolutionData.id, this.createForm.value)
         .subscribe({
           next: () => {
             this.close.emit();
-            toast.success('Categoria actualizada con éxito');
+            toast.success('Resolución actualizada con éxito');
           },
           error: (err) => {
             const errorMsg =
@@ -71,22 +62,24 @@ export class NewModalComponent {
         toast.error('Por favor, completa todos los campos requeridos.');
         return;
       }
-      this.categoriesService
-        .createCategoryDetails(this.createForm.value)
-        .subscribe({
-          next: () => {
-            this.close.emit();
-            const { name } = this.createForm.value;
-            toast.success(`Categoría "${name}" registrada con éxito`);
-          },
-          error: (err) => {
-            const errorMsg =
-              err?.error?.message || 'Error al crear la categoría';
-            toast.error(errorMsg);
-          },
-        });
+      this.reslutionsService.createResolution(this.createForm.value).subscribe({
+        next: () => {
+          this.close.emit();
+          const { name } = this.createForm.value;
+          toast.success(`Categoría "${name}" registrada con éxito`);
+        },
+      });
     }
   }
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.isEdit && this.resolutionData) {
+      this.createForm.patchValue({
+        name: this.resolutionData.name,
+        description: this.resolutionData.description,
+      });
+    }
+  }
+
   closeModal(): void {
     this.close.emit();
     this.isEdit = false;

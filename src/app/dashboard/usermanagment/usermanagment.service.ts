@@ -1,41 +1,47 @@
-import { AuthService } from '@autService';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AuthService } from '@autService';
 import { catchError, Observable, throwError } from 'rxjs';
-
+export interface AreaDTO {
+  id: number;
+  name: string;
+}
 @Injectable({
   providedIn: 'root',
 })
-export class CategoriesService {
+export class UsermanagmentService {
   private readonly _basic_url = 'http://localhost:8080/';
   constructor(private http: HttpClient, private authService: AuthService) {}
-
-  createCategoryDetails(categoryDTO: any): Observable<any> {
-    return this.http.post(`${this._basic_url}api/admin/category`, categoryDTO, {
+  createUserDetails(userDTO: any): Observable<any> {
+    return this.http.post(`${this._basic_url}api/admin/user`, userDTO, {
       headers: this.createAuthorizationHeader(),
     });
   }
-  getAllCategories(pageNumber: number): Observable<any> {
+  getAllAreas(): Observable<AreaDTO[]> {
+    return this.http.get<AreaDTO[]>(`${this._basic_url}api/admin/areas`);
+  }
+  getAllUsers(pageNumber: number): Observable<any> {
     return this.http
-      .get(`${this._basic_url}api/admin/categories/${pageNumber}`, {
+      .get(`${this._basic_url}api/admin/users/${pageNumber}`, {
         headers: this.createAuthorizationHeader(),
       })
       .pipe(catchError(this.handleError));
   }
-  updateCategory(id: number, categoryDTO: any): Observable<any> {
+  updateUser(id: number, userDTO: any): Observable<any> {
     return this.http
-      .put(`${this._basic_url}api/admin/categories/${id}`, categoryDTO, {
+      .put(`${this._basic_url}api/admin/users/${id}`, userDTO, {
         headers: this.createAuthorizationHeader(),
       })
       .pipe(catchError(this.handleError));
   }
-  deleteCategory(id: number) {
+  deleteUser(id: number) {
     return this.http
-      .delete(`${this._basic_url}api/admin/categories/${id}`, {
+      .delete(`${this._basic_url}api/admin/users/${id}`, {
         headers: this.createAuthorizationHeader(),
       })
       .pipe(catchError(this.handleError));
   }
+
   createAuthorizationHeader() {
     return new HttpHeaders({
       Authorization: `Bearer ${this.authService.getToken()}`,
@@ -43,10 +49,7 @@ export class CategoriesService {
     });
   }
   private handleError(error: any): Observable<never> {
-    // Maneja el error de manera más informativa
     console.error('An error occurred:', error);
-    return throwError(
-      () => new Error('Error en el servicio; intenta nuevamente más tarde.')
-    );
+    return throwError(() => new Error(error.message || 'Server Error'));
   }
 }
