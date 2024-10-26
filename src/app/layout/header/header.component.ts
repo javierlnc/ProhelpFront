@@ -6,16 +6,12 @@ import { Component, OnInit } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrl: './header.component.css',
 })
 export class HeaderComponent implements OnInit {
   user: any;
-  constructor(private authService:AuthService){}
+  constructor(private authService: AuthService) {}
   ngOnInit(): void {
     this.user = this.authService.getUser();
-    console.log ( "usernamae user ",this.user )
-    console.log ( localStorage.getItem('user') )
   }
-  }
-
-
+}

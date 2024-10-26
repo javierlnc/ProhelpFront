@@ -37,7 +37,11 @@
     class="max flex mt-20 flex-col space-y-2 w-full h-[calc(100vh)]"
     *ngIf="sidebarState === 'open'"
   >
-    <a class="sidebar--max" [routerLink]="['/dashboard/main']" (click)="toggleSidebar()">
+    <a
+      class="sidebar--max"
+      [routerLink]="['/dashboard/main']"
+      (click)="toggleSidebar()"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -53,7 +57,7 @@
       </svg>
       <div>Home</div>
     </a>
-    <a class="sidebar--max">
+    <a class="sidebar--max" [routerLink]="['/dashboard/solicitud']">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -112,7 +116,11 @@
       </svg>
       <div>Herramientas</div>
     </a>
-    <a class="sidebar--max" [routerLink]="['/dashboard/usermanagment']" (click)="toggleSidebar()">
+    <a
+      class="sidebar--max"
+      [routerLink]="['/dashboard/usermanagment']"
+      (click)="toggleSidebar()"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -150,7 +158,7 @@
         />
       </svg>
     </a>
-    <a class="sidebar--mini" [routerLink]="['/dashboard/prueba']">
+    <a class="sidebar--mini" [routerLink]="['/dashboard/solicitud']">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -206,7 +214,7 @@
         />
       </svg>
     </a>
-    <a class="sidebar--mini"[routerLink]="['/dashboard/usermanagment']">
+    <a class="sidebar--mini" [routerLink]="['/dashboard/usermanagment']">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
