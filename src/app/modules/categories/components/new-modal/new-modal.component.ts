@@ -16,6 +16,7 @@ import { isFieldRequired } from '@utils/validators/validators';
 import { CommonModule } from '@angular/common';
 import { CategoriesService } from '../../../../data/services/categories.service';
 import { toast } from 'ngx-sonner';
+import { Category } from '@interfaces/category';
 
 @Component({
   selector: 'app-new-modal',
@@ -27,7 +28,7 @@ import { toast } from 'ngx-sonner';
 export class NewModalComponent {
   @Output() close = new EventEmitter<void>();
   @Input() isEdit: boolean = false;
-  @Input() categoryData: any;
+  @Input() categoryData!: Category;
   private formBuilder = inject(FormBuilder);
   private categoriesService = inject(CategoriesService);
 

@@ -2,6 +2,7 @@ import { AuthService } from 'src/app/data/services/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
+import { Category } from '@interfaces/category';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ export class CategoriesService {
   private readonly _basic_url = 'http://localhost:8080/';
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  createCategoryDetails(categoryDTO: any): Observable<any> {
+  createCategoryDetails(categoryDTO: Category): Observable<any> {
     return this.http.post(`${this._basic_url}api/admin/category`, categoryDTO, {
       headers: this.createAuthorizationHeader(),
     });

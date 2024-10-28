@@ -16,7 +16,7 @@ import {
 } from '@angular/forms';
 import { toast } from 'ngx-sonner';
 import { isFieldRequired } from '@utils/validators/validators';
-import { SolicitudService } from '../../../../data/services/solicitud.service';
+import { SolicitudService } from '../../../../data/services/tickets.service';
 import { Category } from '@interfaces/category';
 
 @Component({
@@ -29,7 +29,6 @@ import { Category } from '@interfaces/category';
 export class NewSolicitudModalComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
   @Input() isEdit: boolean = false;
-  @Input() userData: any;
   createForm: FormGroup;
   categories: Category[] = [];
 
@@ -49,7 +48,7 @@ export class NewSolicitudModalComponent implements OnInit {
   }
   private loadCategories(): void {
     this.categoriesService.getListCategories().subscribe(
-      (data: any[]) => {
+      (data: Category[]) => {
         console.log(data);
         this.categories = data;
         console.log('Categoires: ' + this.categories);

@@ -1,6 +1,7 @@
 import { toast } from 'ngx-sonner';
 import { CategoriesService } from '../../../../data/services/categories.service';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Category } from '@interfaces/category';
 
 @Component({
   selector: 'app-delete-modal',
@@ -11,7 +12,7 @@ import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 })
 export class DeleteModalComponent {
   @Output() closeDelete = new EventEmitter<void>();
-  @Input() categoryData: any;
+  @Input() categoryData!: Category;
   private categoriesService = inject(CategoriesService);
 
   closeModal(): void {
