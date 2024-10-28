@@ -42,5 +42,96 @@
   <div class="p-4 space-x-4">
     <button class="button-primary" (click)="openModal()">Nueva</button>
   </div>
+  <div class="overflow-auto max-h-[calc(100vh-200px)]">
+    <table class="w-full text-sm text-left">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+        <tr>
+          <th scope="col" class="px-6 py-3">Id</th>
+          <th scope="col" class="px-6 py-3">Asunto</th>
+          <th scope="col" class="px-6 py-3">Solicitante</th>
+          <th scope="col" class="px-6 py-3">Estado</th>
+          <th scope="col" class="px-6 py-3 text-center">Fecha Creacion</th>
+          <th scope="col" class="px-6 py-3 text-center">Fecha Cierre</th>
+          <th scope="col" class="px-6 py-3 text-center">Tecnico</th>
+          <th scope="col" class="px-6 py-3">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-b hover:bg-gray-50" *ngFor="let ticket of tickets">
+          <th
+            scope="row"
+            class="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap"
+          >
+            {{ ticket.id }}
+          </th>
+          <th
+            scope="row"
+            class="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap"
+          >
+            {{ ticket.subject }}
+          </th>
+          <th
+            scope="row"
+            class="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap"
+          >
+            {{ ticket.requester.name }}
+          </th>
+          <th
+            scope="row"
+            class="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap"
+          >
+            {{ getTicketStatusName(ticket.status) }}
+          </th>
+          <th
+            scope="row"
+            class="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap text-center"
+          >
+            {{ ticket.createdDate | date : "dd/MM/yyyy, h:mm a" }}
+          </th>
+          <th
+            scope="row"
+            class="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap text-center"
+          >
+            {{ (ticket.dueDate | date : "dd/MM/yyyy, h:mm a") || "---" }}
+          </th>
+          <th
+            scope="row"
+            class="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap text-center"
+          >
+            {{ ticket.assignedTechnician?.username || "---" }}
+          </th>
+          <th
+            scope="row"
+            class="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap"
+          >
+            <a class="font-medium text-green-500 hover:ring-green-700">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-file-barcode"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                <path
+                  d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"
+                />
+                <path d="M8 13h1v3h-1z" />
+                <path d="M12 13v3" />
+                <path d="M15 13h1v3h-1z" />
+              </svg>
+            </a>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
   <app-nsmodal *ngIf="showModal" (close)="closeModal()"></app-nsmodal>
 </div>

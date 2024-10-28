@@ -20,7 +20,7 @@ import {
   isFieldRequired,
   passwordsMatchValidator,
 } from '@utils/validators/validators';
-import { rolesMapping, UserRole } from '@utils/roles-mapping/roles-mapping';
+import { RolesMapping, UserRole } from '@utils/roles-mapping/roles-mapping';
 import { Area } from '@interfaces/area';
 
 @Component({
@@ -37,7 +37,7 @@ export class NewUserModalComponent implements OnInit {
 
   areas: Area[] = [];
   rolesBackend = Object.values(UserRole);
-  rolesEnum = rolesMapping;
+  rolesEnum = RolesMapping;
   createForm: FormGroup;
 
   private usermanagmentService = inject(UsermanagmentService);
