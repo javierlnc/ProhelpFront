@@ -22,6 +22,13 @@ export class CategoriesService {
       })
       .pipe(catchError(this.handleError));
   }
+  getListCategories(): Observable<any> {
+    return this.http
+      .get(`${this._basic_url}api/admin/category/all`, {
+        headers: this.createAuthorizationHeader(),
+      })
+      .pipe(catchError(this.handleError));
+  }
   updateCategory(id: number, categoryDTO: any): Observable<any> {
     return this.http
       .put(`${this._basic_url}api/admin/categories/${id}`, categoryDTO, {
