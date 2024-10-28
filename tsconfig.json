@@ -6,8 +6,12 @@
     "baseUrl": "./",
     "paths": {
       "@utils/*":["src/app/utils/*"],
+      "@core/*":["src/app/core/*"],
+      "@modules/*":["src/app/modules/*"],
       "@layout/*":["src/app/layout/*"],
-      "@autService":["src/app/auth/login/auth.service.ts"]
+      "@services/*":["src/app/data/services/*"],
+      "@interfaces/*":["src/app/data/interfaces/*"],
+      "@autService":["src/app/data/services/auth.service.ts"]
     },
     "outDir": "./dist/out-tsc",
     "strict": true,
