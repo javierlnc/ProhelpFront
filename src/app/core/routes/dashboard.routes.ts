@@ -7,7 +7,7 @@ export default [
       import('@modules/main-dashboard/main-dashboard.component'),
   },
   {
-    path: 'tools',
+    path: 'admintools',
     loadComponent: () => import('@modules/admintools/admintools.component'),
   },
   {
@@ -24,6 +24,7 @@ export default [
     path: 'reports',
     loadComponent: () => import('@modules/reports/reports.component'),
   },
+
   {
     path: 'usermanagment',
     loadComponent: () =>
@@ -31,6 +32,6 @@ export default [
   },
   {
     path: 'tickets',
-    loadComponent: () => import('@modules/tickets/page/solicitudes.component'),
+    loadComponent: () => import('@modules/tickets/page/tickets.component'),
   },
 ] as Routes;

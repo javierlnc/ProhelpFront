@@ -35,7 +35,7 @@ export default class CategoriesComponent implements OnInit {
     this.showDeleteModal = true;
     this.categryDeleted = category;
   }
-  isEdit(category: any) {
+  isEdit(category: Category) {
     this.isEditModal = true;
     this.categoryEdit = category;
     this.openModal();

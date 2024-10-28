@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from 'src/app/data/services/auth.service';
 import { Observable, throwError } from 'rxjs';
+import { TicketRequets } from '@interfaces/ticket-requets';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class SolicitudService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  creteTicket(tikectDTO: any): Observable<any> {
+  creteTicket(tikectDTO: TicketRequets): Observable<any> {
     return this.http.post(`${this._basic_url}api/ticket/create`, tikectDTO, {
       headers: this.createAuthorizationHeader(),
     });

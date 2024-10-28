@@ -4,5 +4,6 @@ export interface User {
   email: string;
   name: string;
   role: string;
+  areaId?: number;
   area: { areaDTO: { id: number; name: string } };
 }

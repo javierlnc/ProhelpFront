@@ -1,8 +1,8 @@
-import { Resolution } from '../../modules/resolutions/page/resolutions.component';
-import { AuthService } from 'src/app/data/services/auth.service';
+import { AuthService } from '@services/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
+import { Resolution } from '@interfaces/resolution';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class ResolutionsService {
       })
       .pipe(catchError(this.handleError));
   }
-  createResolution(resolutionDTO: any) {
+  createResolution(resolutionDTO: Resolution) {
     return this.http.post(
       `${this._basic_url}api/admin/resolution`,
       resolutionDTO,

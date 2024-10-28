@@ -6,10 +6,10 @@ import { NewSolicitudModalComponent } from '../components/new-solicitud-modal/ne
   selector: 'app-solicitudes',
   standalone: true,
   imports: [NewSolicitudModalComponent, CommonModule],
-  templateUrl: './solicitudes.component.html',
-  styleUrl: './solicitudes.component.css',
+  templateUrl: './tickets.component.html',
+  styleUrl: './tickets.component.css',
 })
-export default class SolicitudesComponent {
+export default class TicketsComponent {
   showModal: boolean = false;
   openModal() {
     this.showModal = true;
