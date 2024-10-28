@@ -38,17 +38,20 @@ export class NewSolicitudModalComponent implements OnInit {
   constructor() {
     this.createForm = this.formBuilder.group({
       subject: ['', Validators.required],
-      categoriaId: ['', Validators.required],
+      categoryId: ['', Validators.required],
       description: ['', Validators.required],
     });
   }
   ngOnInit(): void {
     this.loadCategories();
+    console.log(this.categories);
   }
   private loadCategories(): void {
     this.categoriesService.getListCategories().subscribe(
       (data: any[]) => {
+        console.log(data);
         this.categories = data;
+        console.log('Categoires: ' + this.categories);
       },
       (error) => {
         toast.error(
