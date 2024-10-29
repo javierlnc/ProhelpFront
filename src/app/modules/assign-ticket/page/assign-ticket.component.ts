@@ -97,7 +97,6 @@ export default class AssignTicketComponent implements OnInit {
     this.userManagmentService.getUsersFilter().subscribe({
       next: (res) => {
         this.users = res;
-        console.log(this.users);
       },
       error: (err) => {
         const errorMsg = err?.error?.message || 'Error al cargar tecnicos';
@@ -107,5 +106,20 @@ export default class AssignTicketComponent implements OnInit {
   }
   onCancel() {
     this.router.navigate(['/dashboard/tickets']);
+  }
+  onAssing() {
+    const { assignedTechnicianId, priorityId, id } = this.ticketForm.value;
+    this.ticketService
+      .assignTechnicianAndPriority(id, assignedTechnicianId, priorityId)
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/dashboard/tickets']);
+          toast.success(`solicitud asignada`);
+        },
+        error: (err) => {
+          const errorMsg = err?.error?.message || 'Error al asignar solicitud';
+          toast.error(errorMsg);
+        },
+      });
   }
 }

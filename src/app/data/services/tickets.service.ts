@@ -31,6 +31,21 @@ export class TicketsService {
       })
       .pipe(catchError(this.handleError));
   }
+  assignTechnicianAndPriority(
+    ticketId: number,
+    technicianId: number,
+    priorityId: number
+  ): Observable<any> {
+    const body = {
+      technicianId: technicianId,
+      priorityId: priorityId,
+    };
+    return this.http
+      .put(`${this._basic_url}api/ticket/${ticketId}/assign`, body, {
+        headers: this.createAuthorizationHeader(),
+      })
+      .pipe(catchError(this.handleError));
+  }
   createAuthorizationHeader() {
     return new HttpHeaders({
       Authorization: `Bearer ${this.authService.getToken()}`,
