@@ -104,7 +104,10 @@
             scope="row"
             class="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap"
           >
-            <a class="font-medium text-green-500 hover:ring-green-700">
+            <a
+              class="font-medium text-green-500 hover:ring-green-700"
+              (click)="toAssign(ticket.id)"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"

@@ -34,4 +34,9 @@ export default [
     path: 'tickets',
     loadComponent: () => import('@modules/tickets/page/tickets.component'),
   },
+  {
+    path: 'assign-ticket/:id',
+    loadComponent: () =>
+      import('@modules/assign-ticket/page/assign-ticket.component'),
+  },
 ] as Routes;

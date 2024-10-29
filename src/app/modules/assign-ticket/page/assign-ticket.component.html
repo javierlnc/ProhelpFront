@@ -1,0 +1,113 @@
+<div class="md:flex justify-between items-center border-b pb-4 mb-6">
+  <h2 class="md:w-1/3 uppercase tracking-wide text-lg font-semibold">
+    Asignación de Solicitud
+  </h2>
+</div>
+
+<form class="space-y-8">
+  <div class="overflow-x-scroll h-[calc(100vh-170px)]">
+    <!-- Datos de Solicitud -->
+    <fieldset
+      class="md:flex border p-4 rounded-md mb-6 border-neutral-800 justify-center"
+    >
+      <legend class="md:px-3 text-sm font-semibold uppercase">
+        Datos de Solicitud
+      </legend>
+      <div class="md:w-2/3 px-3 space-y-4">
+        <p class="text-xs font-light text-red-500 m-4">
+          No puedes modificar esta sección
+        </p>
+        <div class="md:flex gap-4">
+          <div class="md:w-1/2">
+            <label class="block text-xs font-semibold mb-1">Id</label>
+            <input
+              class="w-1/2 shadow-inner p-3 border rounded-md"
+              type="text"
+              name="ticketId"
+              placeholder="Id de solicitud"
+              disabled
+            />
+          </div>
+          <div class="md:w-1/2">
+            <label class="block text-xs font-semibold mb-1">Solicitante</label>
+            <input
+              class="w-full shadow-inner p-3 border rounded-md"
+              type="text"
+              name="requester"
+              placeholder="Solicitante"
+              disabled
+            />
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold mb-1">Nombre</label>
+          <input
+            class="w-full shadow-inner p-3 border rounded-md"
+            type="text"
+            name="name"
+            placeholder="Acme Mfg. Co."
+            disabled
+          />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold mb-1">Descripción</label>
+          <textarea
+            class="w-full shadow-inner p-3 border rounded-md resize-none h-32 overflow-x-scroll"
+            placeholder="Descripción del servicio o solicitud..."
+            disabled
+          ></textarea>
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- Asignación -->
+    <fieldset class="md:flex border p-4 mb-16 rounded-md justify-center">
+      <legend class="md:px-3 text-sm font-semibold uppercase">
+        Asignación
+      </legend>
+      <div class="md:w-2/3 px-3 space-y-4">
+        <p class="text-xs font-light text-red-500 mb-4">
+          Escoge un técnico y un nivel de prioridad
+        </p>
+        <div class="md:flex gap-4">
+          <div class="md:w-1/2">
+            <label class="block text-xs font-semibold mb-1"
+              >Nombre del Técnico</label
+            >
+            <input
+              class="w-full shadow-inner p-3 border rounded-md"
+              type="text"
+              name="technician_name"
+              placeholder="Nombre del técnico"
+            />
+          </div>
+          <div class="md:w-1/2">
+            <label class="block text-xs font-semibold mb-1"
+              >Nivel de Prioridad</label
+            >
+            <select class="w-full shadow-inner p-3 border rounded-md">
+              <option value="">Seleccione una prioridad</option>
+              <option value="alta">Alta</option>
+              <option value="media">Media</option>
+              <option value="baja">Baja</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <div
+    class="fixed bottom-0 left-0 w-full bg-gray-100 p-4 flex justify-between items-center border-t"
+  >
+    <div class="space-x-4">
+      <button type="button" class="button-primary">Guardar</button>
+      <button
+        type="button"
+        class="bg-gray-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-gray-600"
+      >
+        Cancelar
+      </button>
+    </div>
+    <button type="button" class="button-secondary">Eliminar</button>
+  </div>
+</form>

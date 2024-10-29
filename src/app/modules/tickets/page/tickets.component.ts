@@ -4,6 +4,7 @@ import { NewSolicitudModalComponent } from '../components/new-solicitud-modal/ne
 import { TicketsService } from '@services/tickets.service';
 import { toast } from 'ngx-sonner';
 import { StatusMapping } from '@utils/status-mapping/status-mapping';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-solicitudes',
@@ -14,6 +15,7 @@ import { StatusMapping } from '@utils/status-mapping/status-mapping';
 })
 export default class TicketsComponent implements OnInit {
   ticketService = inject(TicketsService);
+  router = inject(Router);
   tickets: any[] = [];
 
   ngOnInit(): void {
@@ -34,6 +36,9 @@ export default class TicketsComponent implements OnInit {
   }
   getTicketStatusName(status: string): string {
     return StatusMapping[status as keyof typeof StatusMapping] || status;
+  }
+  toAssign(ticketId: number): void {
+    this.router.navigate([`dashboard/assign-ticket/${ticketId}`]);
   }
 
   showModal: boolean = false;
