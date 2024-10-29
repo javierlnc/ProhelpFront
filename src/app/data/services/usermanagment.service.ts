@@ -27,6 +27,13 @@ export class UsermanagmentService {
       })
       .pipe(catchError(this.handleError));
   }
+  getUsersFilter(): Observable<any> {
+    return this.http
+      .get(`${this._basic_url}api/admin/users/filtered`, {
+        headers: this.createAuthorizationHeader(),
+      })
+      .pipe(catchError(this.handleError));
+  }
   updateUser(id: number, userDTO: any): Observable<any> {
     return this.http
       .put(`${this._basic_url}api/admin/users/${id}`, userDTO, {

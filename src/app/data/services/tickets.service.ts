@@ -24,6 +24,13 @@ export class TicketsService {
       })
       .pipe(catchError(this.handleError));
   }
+  getTicketById(id: number): Observable<any> {
+    return this.http
+      .get(`${this._basic_url}api/ticket/${id}`, {
+        headers: this.createAuthorizationHeader(),
+      })
+      .pipe(catchError(this.handleError));
+  }
   createAuthorizationHeader() {
     return new HttpHeaders({
       Authorization: `Bearer ${this.authService.getToken()}`,
