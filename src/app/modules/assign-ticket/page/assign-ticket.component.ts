@@ -9,22 +9,24 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { CommonModule, DatePipe } from '@angular/common'; // Importa DatePipe
+import { CommonModule, DatePipe } from '@angular/common';
 import { TicketsService } from '@services/tickets.service';
+import { isFieldRequired } from '@utils/validators/validators';
 
 @Component({
   selector: 'app-assign-ticket',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './assign-ticket.component.html',
-  styleUrl: './assign-ticket.component.css',
-  providers: [DatePipe], // Declara el proveedor de DatePipe
+  styleUrls: ['./assign-ticket.component.css'],
+  providers: [DatePipe],
 })
 export default class AssignTicketComponent implements OnInit {
   ticketId!: number;
   ticketResponse!: TicketResponse;
   ticketForm: FormGroup;
-  users: any;
+  users: any[] = [];
+  isCloseEnabled: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,7 +45,7 @@ export default class AssignTicketComponent implements OnInit {
       assignedTechnicianId: ['', Validators.required],
       createdDate: ['', Validators.required],
       category: ['', Validators.required],
-      dueDate: ['', Validators.required],
+      dueDate: '',
     });
   }
 
@@ -52,40 +54,20 @@ export default class AssignTicketComponent implements OnInit {
       const id = params.get('id');
       if (id) {
         this.ticketId = +id;
+        this.getTicket();
       } else {
         console.error('ID del ticket no encontrado');
       }
     });
-    this.getTicket();
     this.getUsersList();
   }
 
-  getTicket() {
+  getTicket(): void {
     this.ticketService.getTicketById(this.ticketId).subscribe({
       next: (res) => {
         this.ticketResponse = res;
-
-        // Formatea las fechas con DatePipe
-        const formattedCreatedDate = this.datePipe.transform(
-          res.createdDate,
-          'dd/MM/yyyy, h:mm a'
-        );
-        const formattedDueDate = res.dueDate
-          ? this.datePipe.transform(res.dueDate, 'dd/MM/yyyy, h:mm a')
-          : '';
-
-        // Configura el valor del formulario
-        this.ticketForm.patchValue({
-          subject: res.subject,
-          requesterName: res.requesterName,
-          id: res.id,
-          description: res.description,
-          priorityId: res.priorityId,
-          assignedTechnicianId: res.assignedTechnicianId,
-          createdDate: formattedCreatedDate, // Usa la fecha formateada
-          category: res.category,
-          dueDate: formattedDueDate, // Usa la fecha formateada
-        });
+        this.checkButtonStatus();
+        this.patchTicketForm(res);
       },
       error: (err) => {
         const errorMsg = err?.error?.message || 'Error al cargar solicitud';
@@ -93,28 +75,61 @@ export default class AssignTicketComponent implements OnInit {
       },
     });
   }
-  getUsersList() {
+
+  private patchTicketForm(ticket: TicketResponse): void {
+    const formattedCreatedDate = this.datePipe.transform(
+      ticket.createdDate,
+      'dd/MM/yyyy, h:mm a'
+    );
+    const formattedDueDate = ticket.dueDate
+      ? this.datePipe.transform(ticket.dueDate, 'dd/MM/yyyy, h:mm a')
+      : '';
+
+    this.ticketForm.patchValue({
+      subject: ticket.subject,
+      requesterName: ticket.requesterName,
+      id: ticket.id,
+      description: ticket.description,
+      priorityId: ticket.priorityId,
+      assignedTechnicianId: ticket.assignedTechnicianId,
+      createdDate: formattedCreatedDate,
+      category: ticket.category,
+      dueDate: formattedDueDate,
+    });
+  }
+  isRequired(field: string): boolean {
+    return isFieldRequired(field, this.ticketForm);
+  }
+  getUsersList(): void {
     this.userManagmentService.getUsersFilter().subscribe({
       next: (res) => {
         this.users = res;
       },
       error: (err) => {
-        const errorMsg = err?.error?.message || 'Error al cargar tecnicos';
+        const errorMsg = err?.error?.message || 'Error al cargar técnicos';
         toast.error(errorMsg);
       },
     });
   }
-  onCancel() {
+
+  private checkButtonStatus(): void {
+    this.isCloseEnabled =
+      this.ticketResponse.status === 'OPEN' ||
+      this.ticketResponse.status === 'ON_HOLD';
+  }
+
+  onCancel(): void {
     this.router.navigate(['/dashboard/tickets']);
   }
-  onAssing() {
+
+  onAssign(): void {
     const { assignedTechnicianId, priorityId, id } = this.ticketForm.value;
     this.ticketService
       .assignTechnicianAndPriority(id, assignedTechnicianId, priorityId)
       .subscribe({
         next: () => {
           this.router.navigate(['/dashboard/tickets']);
-          toast.success(`solicitud asignada`);
+          toast.success('Solicitud asignada');
         },
         error: (err) => {
           const errorMsg = err?.error?.message || 'Error al asignar solicitud';

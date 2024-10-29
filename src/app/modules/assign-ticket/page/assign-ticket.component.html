@@ -7,9 +7,7 @@
 <form class="space-y-8" [formGroup]="ticketForm">
   <div class="overflow-x-scroll h-[calc(100vh-170px)]">
     <!-- Datos de Solicitud -->
-    <fieldset
-      class="md:flex border p-4 rounded-md mb-6 border-neutral-800 justify-center"
-    >
+    <fieldset class="md:flex border p-4 rounded-md mb-6 justify-center">
       <legend class="md:px-3 text-sm font-semibold uppercase">
         Datos de Solicitud
       </legend>
@@ -113,6 +111,12 @@
                 {{ user.name }}
               </option>
             </select>
+            <div
+              *ngIf="isRequired('assignedTechnicianId')"
+              class="text-red-400 text-sm mt-2"
+            >
+              Se requiere asignar un tecnico.
+            </div>
           </div>
           <div class="md:w-1/2">
             <label class="block text-xs font-semibold mb-1"
@@ -128,6 +132,12 @@
               <option value="3">Media</option>
               <option value="4">Baja</option>
             </select>
+            <div
+              *ngIf="isRequired('priorityId')"
+              class="text-red-400 text-sm mt-2"
+            >
+              Se requiere una prioridad.
+            </div>
           </div>
           <div class="md:w-1/2">
             <label class="block text-xs font-semibold mb-1"
@@ -139,6 +149,7 @@
               name="technician_name"
               placeholder="Nombre del técnico"
               formControlName="dueDate"
+              readonly
             />
           </div>
         </div>
@@ -149,10 +160,20 @@
     class="fixed bottom-0 left-0 w-full bg-gray-100 p-4 flex justify-between items-center border-t"
   >
     <div class="space-x-4">
-      <button type="button" class="button-primary" (click)="onAssing()">
+      <button
+        type="button"
+        class="button-primary"
+        (click)="onAssign()"
+        [disabled]="ticketForm.invalid"
+      >
         Asignar
       </button>
-      <button type="button" class="button-primary" (click)="onCancel()">
+      <button
+        type="button"
+        class="button-primary"
+        (click)="onCancel()"
+        [disabled]="!isCloseEnabled"
+      >
         Cerrar
       </button>
     </div>
