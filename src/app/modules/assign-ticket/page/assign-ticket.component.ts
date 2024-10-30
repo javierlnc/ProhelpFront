@@ -12,11 +12,12 @@ import {
 import { CommonModule, DatePipe } from '@angular/common';
 import { TicketsService } from '@services/tickets.service';
 import { isFieldRequired } from '@utils/validators/validators';
+import { CloseModalComponent } from '../components/close-modal/close-modal.component';
 
 @Component({
   selector: 'app-assign-ticket',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, CloseModalComponent],
   templateUrl: './assign-ticket.component.html',
   styleUrls: ['./assign-ticket.component.css'],
   providers: [DatePipe],
@@ -27,6 +28,7 @@ export default class AssignTicketComponent implements OnInit {
   ticketForm: FormGroup;
   users: any[] = [];
   isCloseEnabled: boolean = false;
+  showModal = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -96,6 +98,12 @@ export default class AssignTicketComponent implements OnInit {
       category: ticket.category,
       dueDate: formattedDueDate,
     });
+  }
+  openModal(): void {
+    this.showModal = true;
+  }
+  closeModal(): void {
+    this.showModal = false;
   }
   isRequired(field: string): boolean {
     return isFieldRequired(field, this.ticketForm);

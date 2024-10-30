@@ -19,6 +19,13 @@ export class ResolutionsService {
       })
       .pipe(catchError(this.handleError));
   }
+  getAllResoutionsList(): Observable<any> {
+    return this.http
+      .get(`${this._basic_url}api/admin/resolution/all`, {
+        headers: this.createAuthorizationHeader(),
+      })
+      .pipe(catchError(this.handleError));
+  }
   createResolution(resolutionDTO: Resolution) {
     return this.http.post(
       `${this._basic_url}api/admin/resolution`,

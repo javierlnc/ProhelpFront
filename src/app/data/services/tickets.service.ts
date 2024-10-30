@@ -31,6 +31,20 @@ export class TicketsService {
       })
       .pipe(catchError(this.handleError));
   }
+  closeTicket(
+    ticketId: number,
+    resolutionDescription: string
+  ): Observable<any> {
+    return this.http
+      .put(
+        `${this._basic_url}api/ticket/${ticketId}/close`,
+        resolutionDescription,
+        {
+          headers: this.createAuthorizationHeader(),
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
   assignTechnicianAndPriority(
     ticketId: number,
     technicianId: number,
