@@ -1,8 +1,6 @@
-import { UsermanagmentService } from '@services/usermanagment.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { toast } from 'ngx-sonner';
-import { TicketResponse } from '@interfaces/ticket-response';
 import {
   FormBuilder,
   FormGroup,
@@ -10,9 +8,11 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
-import { TicketsService } from '@services/tickets.service';
 import { isFieldRequired } from '@utils/validators/validators';
 import { CloseModalComponent } from '../components/close-modal/close-modal.component';
+import { UsermanagmentService } from '@services/usermanagment.service';
+import { TicketsService } from '@services/tickets.service';
+import { TicketResponse } from '@interfaces/ticket-response';
 
 @Component({
   selector: 'app-assign-ticket',
@@ -38,20 +38,14 @@ export default class AssignTicketComponent implements OnInit {
     private router: Router,
     private userManagmentService: UsermanagmentService
   ) {
-    this.ticketForm = this.formBuilder.group({
-      subject: ['', Validators.required],
-      requesterName: ['', Validators.required],
-      id: ['', Validators.required],
-      description: ['', Validators.required],
-      priorityId: ['', Validators.required],
-      assignedTechnicianId: ['', Validators.required],
-      createdDate: ['', Validators.required],
-      category: ['', Validators.required],
-      dueDate: '',
-    });
+    this.ticketForm = this.initForm();
   }
 
   ngOnInit(): void {
+    this.initialize();
+  }
+
+  private initialize(): void {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
@@ -64,21 +58,32 @@ export default class AssignTicketComponent implements OnInit {
     this.getUsersList();
   }
 
+  private initForm(): FormGroup {
+    return this.formBuilder.group({
+      subject: ['', Validators.required],
+      requesterName: ['', Validators.required],
+      id: ['', Validators.required],
+      description: ['', Validators.required],
+      priorityId: ['', Validators.required],
+      assignedTechnicianId: ['', Validators.required],
+      createdDate: ['', Validators.required],
+      category: ['', Validators.required],
+      dueDate: '',
+    });
+  }
+
   getTicket(): void {
     this.ticketService.getTicketById(this.ticketId).subscribe({
       next: (res) => {
         this.ticketResponse = res;
-        this.checkButtonStatus();
-        this.patchTicketForm(res);
+        this.updateButtonStatus();
+        this.populateTicketForm(res);
       },
-      error: (err) => {
-        const errorMsg = err?.error?.message || 'Error al cargar solicitud';
-        toast.error(errorMsg);
-      },
+      error: (err) => this.handleError(err, 'Error al cargar solicitud'),
     });
   }
 
-  private patchTicketForm(ticket: TicketResponse): void {
+  private populateTicketForm(ticket: TicketResponse): void {
     const formattedCreatedDate = this.datePipe.transform(
       ticket.createdDate,
       'dd/MM/yyyy, h:mm a'
@@ -99,31 +104,35 @@ export default class AssignTicketComponent implements OnInit {
       dueDate: formattedDueDate,
     });
   }
+
   openModal(): void {
     this.showModal = true;
   }
+
   closeModal(): void {
     this.showModal = false;
   }
+
   isRequired(field: string): boolean {
     return isFieldRequired(field, this.ticketForm);
   }
+
   getUsersList(): void {
     this.userManagmentService.getUsersFilter().subscribe({
-      next: (res) => {
-        this.users = res;
-      },
-      error: (err) => {
-        const errorMsg = err?.error?.message || 'Error al cargar técnicos';
-        toast.error(errorMsg);
-      },
+      next: (res) => (this.users = res),
+      error: (err) => this.handleError(err, 'Error al cargar técnicos'),
     });
   }
 
-  private checkButtonStatus(): void {
-    this.isCloseEnabled =
-      this.ticketResponse.status === 'OPEN' ||
-      this.ticketResponse.status === 'ON_HOLD';
+  private updateButtonStatus(): void {
+    this.isCloseEnabled = ['OPEN', 'ON_HOLD'].includes(
+      this.ticketResponse.status
+    );
+  }
+
+  private handleError(error: any, message: string): void {
+    const errorMsg = error?.error?.message || message;
+    toast.error(errorMsg);
   }
 
   onCancel(): void {
@@ -139,10 +148,7 @@ export default class AssignTicketComponent implements OnInit {
           this.router.navigate(['/dashboard/tickets']);
           toast.success('Solicitud asignada');
         },
-        error: (err) => {
-          const errorMsg = err?.error?.message || 'Error al asignar solicitud';
-          toast.error(errorMsg);
-        },
+        error: (err) => this.handleError(err, 'Error al asignar solicitud'),
       });
   }
 }

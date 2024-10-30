@@ -36,12 +36,15 @@
         id="table-search"
         placeholder="Buscar categoría"
         class="block p-2 ps-10 text-sm text-neutral-800 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+        aria-label="Buscar categoría"
       />
     </div>
   </div>
+
   <div class="p-4 space-x-4">
     <button class="button-primary" (click)="openModal()">Nueva</button>
   </div>
+
   <div class="overflow-auto max-h-[calc(100vh-200px)]">
     <table class="w-full text-sm text-left">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -50,14 +53,17 @@
           <th scope="col" class="px-6 py-3">Asunto</th>
           <th scope="col" class="px-6 py-3">Solicitante</th>
           <th scope="col" class="px-6 py-3">Estado</th>
-          <th scope="col" class="px-6 py-3 text-center">Fecha Creacion</th>
+          <th scope="col" class="px-6 py-3 text-center">Fecha Creación</th>
           <th scope="col" class="px-6 py-3 text-center">Fecha Cierre</th>
-          <th scope="col" class="px-6 py-3 text-center">Tecnico</th>
-          <th scope="col" class="px-6 py-3">Action</th>
+          <th scope="col" class="px-6 py-3 text-center">Técnico</th>
+          <th scope="col" class="px-6 py-3">Acción</th>
         </tr>
       </thead>
       <tbody>
-        <tr class="border-b hover:bg-gray-50" *ngFor="let ticket of tickets">
+        <tr
+          class="border-b hover:bg-gray-50"
+          *ngFor="let ticket of tickets; trackBy: trackByTicketId"
+        >
           <th
             scope="row"
             class="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap"
@@ -92,7 +98,11 @@
             scope="row"
             class="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap text-center"
           >
-            {{ (ticket.dueDate | date : "dd/MM/yyyy, h:mm a") || "---" }}
+            {{
+              ticket.dueDate
+                ? (ticket.dueDate | date : "dd/MM/yyyy, h:mm a")
+                : "---"
+            }}
           </th>
           <th
             scope="row"
@@ -105,7 +115,7 @@
             class="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap"
           >
             <a
-              class="font-medium text-green-500 hover:ring-green-700"
+              class="font-medium text-green-500 hover:ring-green-700 cursor-pointer"
               (click)="toAssign(ticket.id)"
             >
               <svg

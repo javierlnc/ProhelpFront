@@ -51,7 +51,6 @@ export class NewSolicitudModalComponent implements OnInit {
       (data: Category[]) => {
         console.log(data);
         this.categories = data;
-        console.log('Categoires: ' + this.categories);
       },
       (error) => {
         toast.error(

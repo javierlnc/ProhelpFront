@@ -1,51 +1,58 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule, registerLocaleData } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { NewSolicitudModalComponent } from '../components/new-solicitud-modal/new-solicitud-modal.component';
 import { TicketsService } from '@services/tickets.service';
 import { toast } from 'ngx-sonner';
 import { StatusMapping } from '@utils/status-mapping/status-mapping';
 import { Router } from '@angular/router';
+import { TicketResponse } from '@interfaces/ticket-response';
 
 @Component({
   selector: 'app-solicitudes',
   standalone: true,
   imports: [NewSolicitudModalComponent, CommonModule],
   templateUrl: './tickets.component.html',
-  styleUrl: './tickets.component.css',
+  styleUrls: ['./tickets.component.css'],
 })
 export default class TicketsComponent implements OnInit {
-  ticketService = inject(TicketsService);
-  router = inject(Router);
-  tickets: any[] = [];
+  private ticketService = inject(TicketsService);
+  private router = inject(Router);
+  tickets: any[] = []; // Cambiado de 'any' a 'Ticket' (si tienes un modelo)
+
+  showModal = false;
 
   ngOnInit(): void {
     this.getTickets();
   }
 
-  getTickets() {
+  getTickets(): void {
     this.ticketService.getTicketsListByUser().subscribe({
-      next: (res) => {
+      next: (res: any[]) => {
         this.tickets = res;
-        console.log(this.tickets);
       },
       error: (err) => {
-        const errorMsg = err?.error?.message || 'Error al crear la categoría';
+        const errorMsg = err?.error?.message || 'Error al obtener los tickets';
         toast.error(errorMsg);
       },
     });
   }
+  trackByTicketId(index: number, ticket: any): number {
+    return ticket.id; // o cualquier identificador único
+  }
   getTicketStatusName(status: string): string {
     return StatusMapping[status as keyof typeof StatusMapping] || status;
   }
+
   toAssign(ticketId: number): void {
     this.router.navigate([`dashboard/assign-ticket/${ticketId}`]);
   }
 
-  showModal: boolean = false;
-  openModal() {
+  openModal(): void {
     this.showModal = true;
   }
-  closeModal() {
+
+  closeModal(): void {
     this.showModal = false;
+    this.getTickets();
   }
 }
