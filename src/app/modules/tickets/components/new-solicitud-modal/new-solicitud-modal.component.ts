@@ -16,7 +16,7 @@ import {
 } from '@angular/forms';
 import { toast } from 'ngx-sonner';
 import { isFieldRequired } from '@utils/validators/validators';
-import { SolicitudService } from '../../../../data/services/tickets.service';
+import { TicketsService } from '../../../../data/services/tickets.service';
 import { Category } from '@interfaces/category';
 
 @Component({
@@ -34,7 +34,7 @@ export class NewSolicitudModalComponent implements OnInit {
 
   private formBuilder = inject(FormBuilder);
   private categoriesService = inject(CategoriesService);
-  private ticketService = inject(SolicitudService);
+  private ticketService = inject(TicketsService);
   constructor() {
     this.createForm = this.formBuilder.group({
       subject: ['', Validators.required],
@@ -51,7 +51,6 @@ export class NewSolicitudModalComponent implements OnInit {
       (data: Category[]) => {
         console.log(data);
         this.categories = data;
-        console.log('Categoires: ' + this.categories);
       },
       (error) => {
         toast.error(

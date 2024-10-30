@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DeleteModalComponent } from '../components/delete-modal/delete-modal.component';
 import { User } from '@interfaces/user';
+import { RolesMapping } from '@utils/roles-mapping/roles-mapping';
 
 @Component({
   selector: 'app-usermanagment',
@@ -17,47 +18,45 @@ export default class UsermanagmentComponent implements OnInit {
   showDeleteModal = false;
   currentPage = 1;
   users: User[] = [];
-  isEditModal: boolean = false;
-  selectUser: any;
-  delectUser: any;
+  isEditModal = false;
+  selectedUserForEdit: User | null = null;
+  selectedUserForDeletion: User | null = null;
+
   constructor(private usermanagmentService: UsermanagmentService) {}
+
   ngOnInit(): void {
     this.getUsers();
   }
-  getUsers() {
+  getUsers(): void {
     this.usermanagmentService
       .getAllUsers(this.currentPage - 1)
       .subscribe((res) => {
         this.users = res.userDTOList;
       });
   }
-  roleMap: { [key: string]: string } = {
-    ADMIN: 'Administrador',
-    TEC: 'Técnico',
-    GEN: 'General',
-  };
 
-  getRoleName(abbreviation: string): string {
-    return this.roleMap[abbreviation] || abbreviation; // Retorna el nombre completo o la abreviación si no hay coincidencia
+  getRoleName(role: string): string {
+    return RolesMapping[role as keyof typeof RolesMapping] || role;
   }
-  openModal() {
+  openModal(): void {
     this.showModal = true;
   }
 
-  closeModal() {
+  closeModal(): void {
     this.showModal = false;
     this.isEditModal = false;
-    this.delectUser = '';
+    this.selectedUserForDeletion = null;
+    this.selectedUserForEdit = null;
     this.showDeleteModal = false;
     this.getUsers();
   }
-  isEdit(user: any) {
+  isEdit(user: User): void {
     this.isEditModal = true;
     this.openModal();
-    this.selectUser = user;
+    this.selectedUserForEdit = user;
   }
-  deleteUser(user: any) {
+  deleteUser(user: User): void {
     this.showDeleteModal = true;
-    this.delectUser = user;
+    this.selectedUserForDeletion = user;
   }
 }

@@ -140,13 +140,13 @@
   </div>
 </div>
 <app-new-user-modal
-  [userData]="selectUser"
+  [userData]="selectedUserForEdit"
   [isEdit]="isEditModal"
   *ngIf="showModal"
   (close)="closeModal()"
 ></app-new-user-modal>
 <app-delete-modal
   *ngIf="showDeleteModal"
-  [userData]="delectUser"
+  [userData]="selectedUserForDeletion"
   (closeDelete)="closeModal()"
 ></app-delete-modal>
