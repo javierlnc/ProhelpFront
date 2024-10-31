@@ -5,7 +5,6 @@ import { TicketsService } from '@services/tickets.service';
 import { toast } from 'ngx-sonner';
 import { StatusMapping } from '@utils/status-mapping/status-mapping';
 import { Router } from '@angular/router';
-import { TicketResponse } from '@interfaces/ticket-response';
 
 @Component({
   selector: 'app-solicitudes',
