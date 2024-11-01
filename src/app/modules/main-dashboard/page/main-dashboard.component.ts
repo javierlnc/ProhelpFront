@@ -8,6 +8,7 @@ import { toast } from 'ngx-sonner';
 import { TaskService } from '@services/task.service';
 import { TaskResponse } from '@interfaces/task-response';
 import { TicketResponse } from '@interfaces/ticket-response';
+import { UsermanagmentService } from '@services/usermanagment.service';
 
 @Component({
   selector: 'app-main-dashboard',
@@ -26,9 +27,14 @@ export default class MainDashboardComponent implements OnInit {
   tickets: any[] = [];
   approvalList: any[] = [];
   taskList: TaskResponse[] = [];
+  totalResolvedTickets!: number;
+  totalNewTickets!: number;
+  showModal: boolean = false;
+
   constructor(
     private ticketService: TicketsService,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private usermanagmentService: UsermanagmentService
   ) {}
   ngOnInit(): void {
     this.getTickets();
@@ -51,6 +57,12 @@ export default class MainDashboardComponent implements OnInit {
     this.ticketService.getTicketsListByUser().subscribe({
       next: (res: any[]) => {
         this.tickets = res.filter((res) => res.status !== 'RESOLVED');
+        this.totalResolvedTickets = res.filter(
+          (ticket) => ticket.status === 'RESOLVED'
+        ).length;
+        this.totalNewTickets = res.filter(
+          (ticket) => ticket.status === 'NEW'
+        ).length;
       },
       error: (err) => {
         const errorMsg = err?.error?.message || 'Error al obtener los tickets';
@@ -76,5 +88,8 @@ export default class MainDashboardComponent implements OnInit {
         toast.error('No se pudo cerrar la tarea');
       },
     });
+  }
+  openModal(): void {
+    this.showModal = true;
   }
 }
