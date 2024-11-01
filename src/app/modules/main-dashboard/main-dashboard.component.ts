@@ -62,7 +62,18 @@ export default class MainDashboardComponent implements OnInit {
     this.taskService.getTaskForUser().subscribe({
       next: (res: TaskResponse[]) => {
         this.taskList = res.filter((res) => res.status === 'OPEN');
-        console.log(this.taskList);
+      },
+    });
+  }
+  checkTask(taskId: number): void {
+    debugger;
+    this.taskService.closeTask(taskId).subscribe({
+      next: () => {
+        toast.success('Se ha cerrado la tarea');
+        this.getTaskList();
+      },
+      error: (err) => {
+        toast.error('No se pudo cerrar la tarea');
       },
     });
   }
