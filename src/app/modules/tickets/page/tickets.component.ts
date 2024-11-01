@@ -27,7 +27,7 @@ export default class TicketsComponent implements OnInit {
   getTickets(): void {
     this.ticketService.getTicketsListByUser().subscribe({
       next: (res: any[]) => {
-        this.tickets = res;
+        this.tickets = res.filter((res) => res.status !== 'RESOLVED');
       },
       error: (err) => {
         const errorMsg = err?.error?.message || 'Error al obtener los tickets';

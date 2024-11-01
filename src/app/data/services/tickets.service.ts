@@ -38,6 +38,20 @@ export class TicketsService {
       })
       .pipe(catchError(this.handleError));
   }
+  getTicketApproval(ticketId: number): Observable<any> {
+    return this.http
+      .get(`${this._basic_url}api/ticket/approval/${ticketId}`, {
+        headers: this.createAuthorizationHeader(),
+      })
+      .pipe(catchError(this.handleError));
+  }
+  approvalOrRefue(ticketId: number, status: number): Observable<any> {
+    return this.http
+      .put(`${this._basic_url}api/ticket/${ticketId}/approve-close`, status, {
+        headers: this.createAuthorizationHeader(),
+      })
+      .pipe(catchError(this.handleError));
+  }
   closeTicket(
     ticketId: number,
     resolutionDescription: string

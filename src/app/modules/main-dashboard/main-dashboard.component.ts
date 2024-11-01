@@ -2,14 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '@layout/header/header.component';
 import { SidebarComponent } from '@layout/sidebar/sidebar.component';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { TicketsService } from '@services/tickets.service';
 import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-main-dashboard',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, SidebarComponent, RouterOutlet],
+  imports: [
+    CommonModule,
+    HeaderComponent,
+    SidebarComponent,
+    RouterOutlet,
+    RouterLink,
+  ],
   templateUrl: './main-dashboard.component.html',
   styleUrl: './main-dashboard.component.css',
 })
@@ -25,7 +31,6 @@ export default class MainDashboardComponent implements OnInit {
     this.ticketService.getApprovingTickets().subscribe({
       next: (res: any[]) => {
         this.approvalList = res;
-        console.log(this.approvalList);
       },
       error: (err) => {
         const errorMsg =
@@ -37,7 +42,7 @@ export default class MainDashboardComponent implements OnInit {
   getTickets(): void {
     this.ticketService.getTicketsListByUser().subscribe({
       next: (res: any[]) => {
-        this.tickets = res;
+        this.tickets = res.filter((res) => res.status !== 'RESOLVED');
       },
       error: (err) => {
         const errorMsg = err?.error?.message || 'Error al obtener los tickets';
