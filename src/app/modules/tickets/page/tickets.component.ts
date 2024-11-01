@@ -5,7 +5,6 @@ import { TicketsService } from '@services/tickets.service';
 import { toast } from 'ngx-sonner';
 import { StatusMapping } from '@utils/status-mapping/status-mapping';
 import { Router } from '@angular/router';
-import { TicketResponse } from '@interfaces/ticket-response';
 
 @Component({
   selector: 'app-solicitudes',
@@ -28,7 +27,7 @@ export default class TicketsComponent implements OnInit {
   getTickets(): void {
     this.ticketService.getTicketsListByUser().subscribe({
       next: (res: any[]) => {
-        this.tickets = res;
+        this.tickets = res.filter((res) => res.status !== 'RESOLVED');
       },
       error: (err) => {
         const errorMsg = err?.error?.message || 'Error al obtener los tickets';

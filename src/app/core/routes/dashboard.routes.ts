@@ -39,4 +39,11 @@ export default [
     loadComponent: () =>
       import('@modules/assign-ticket/page/assign-ticket.component'),
   },
+  {
+    path: 'approval/:id',
+    loadComponent: () =>
+      import(
+        '@modules/approvalTicket/page/approval-ticket/approval-ticket.component'
+      ),
+  },
 ] as Routes;

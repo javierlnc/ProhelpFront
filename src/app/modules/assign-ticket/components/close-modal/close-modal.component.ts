@@ -81,6 +81,7 @@ export class CloseModalComponent implements OnInit {
           toast.success(
             `Solicitud ${this.ticketToClose.id} se encuentra pendiente de aprobación`
           );
+          this.router.navigate(['/dashboard/tickets']);
         },
         error: (err) => {
           const errorMsg =
