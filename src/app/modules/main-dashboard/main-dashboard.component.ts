@@ -5,6 +5,9 @@ import { SidebarComponent } from '@layout/sidebar/sidebar.component';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { TicketsService } from '@services/tickets.service';
 import { toast } from 'ngx-sonner';
+import { TaskService } from '@services/task.service';
+import { TaskResponse } from '@interfaces/task-response';
+import { TicketResponse } from '@interfaces/ticket-response';
 
 @Component({
   selector: 'app-main-dashboard',
@@ -22,10 +25,15 @@ import { toast } from 'ngx-sonner';
 export default class MainDashboardComponent implements OnInit {
   tickets: any[] = [];
   approvalList: any[] = [];
-  constructor(private ticketService: TicketsService) {}
+  taskList: TaskResponse[] = [];
+  constructor(
+    private ticketService: TicketsService,
+    private taskService: TaskService
+  ) {}
   ngOnInit(): void {
     this.getTickets();
     this.getApprovalList();
+    this.getTaskList();
   }
   getApprovalList(): void {
     this.ticketService.getApprovingTickets().subscribe({
@@ -47,6 +55,14 @@ export default class MainDashboardComponent implements OnInit {
       error: (err) => {
         const errorMsg = err?.error?.message || 'Error al obtener los tickets';
         toast.error(errorMsg);
+      },
+    });
+  }
+  getTaskList(): void {
+    this.taskService.getTaskForUser().subscribe({
+      next: (res: TaskResponse[]) => {
+        this.taskList = res.filter((res) => res.status === 'OPEN');
+        console.log(this.taskList);
       },
     });
   }
