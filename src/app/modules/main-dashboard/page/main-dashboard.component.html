@@ -1,0 +1,233 @@
+<div
+  class="relative overflow-y-hidden overflow-x-auto p-4 px-4 shadow-md sm:rounded-lg"
+  style="height: calc(100vh - 100px)"
+>
+  <!-- Header -->
+  <div
+    class="flex flex-col sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center pb-4"
+  >
+    <div
+      class="inline-flex items-center text-neutral-800 font-medium rounded-lg text-lg px-3 py-1.5"
+    >
+      Home
+    </div>
+  </div>
+  <!-- primera seccion -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 p-4 gap-4">
+    <!-- Resume -->
+    <div
+      class="relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words w-full shadow-lg rounded"
+    >
+      <div class="rounden-t mb-0 px-0 border-0">
+        <div class="seccion-header">
+          <h3 class="seccion-title">Mi Resumen</h3>
+        </div>
+        <div class="block w-full overflow-x-auto">
+          <table class="items-center w-full border-collapse">
+            <thead>
+              <tr>
+                <th class="header-table">ID</th>
+                <th class="header-table">Solicitud</th>
+                <th class="header-table">Tecnico</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ticket of tickets">
+                <th class="text-xs align-middle p-1">{{ ticket.id }}</th>
+                <td class="text-xs align-middle p-1">{{ ticket.subject }}</td>
+                <td class="text-xs align-middle p-1">
+                  {{ ticket.assignedTechnician?.username }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- tareas -->
+    <div
+      class="relative flex flex-col min-w-0 break-words w-full shadow-lg rounded"
+    >
+      <div class="rounded-t mb-0 px-0 border-0">
+        <div class="seccion-header">
+          <h3 class="seccion-title">Mis Tareas</h3>
+          <div class="relative w-full max-w-full flex-grow flex-1 text-right">
+            <button
+              class="bg-lime-300 text-neutral-800 hover:bg-lime-400 focus:ring-4 focus:outline-none focus:ring-lime-200 font-medium rounded-lg text-xs px-3 py-1 transition;"
+              type="button"
+              (click)="openModal()"
+            >
+              New
+            </button>
+          </div>
+        </div>
+
+        <div class="text-sm px-2">
+          <div
+            *ngFor="let task of taskList"
+            class="bg-gray-100 p-2 rounded mt-1 border-b border-gray-100 flex"
+          >
+            <div class="flex-shrink-0 mr-3">
+              <a (click)="checkTask(task.id)">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-checkbox"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M9 11l3 3l8 -8" />
+                  <path
+                    d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9"
+                  />
+                </svg>
+              </a>
+            </div>
+            <div class="self-center">
+              <a
+                href=""
+                class="font-medium text-gray-800 hover:text-gray-900"
+                >{{ task.name }}</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /primera seccion -->
+  <!-- segunda seccion -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 p-4 gap-4">
+    <!-- aprovaciones -->
+    <div
+      class="relative flex flex-col min-w-0 break-words w-full shadow-lg rounded"
+    >
+      <div class="rounded-t mb-0 px-0 border-0">
+        <div class="seccion-header">
+          <h3 class="seccion-title">Mis Aprovaciones</h3>
+        </div>
+        <div class="block w-full">
+          <ul class="my-1">
+            <li class="flex px-4" *ngFor="let approval of approvalList">
+              <div
+                class="flex-grow flex items-center justify-between border-b border-gray-400 text-sm text-gray-600 py-2"
+              >
+                <div class="self-center">{{ approval.subject }}</div>
+                <div class="flex-shrink-0 ml-2">
+                  <a
+                    class="flex items-center font-medium text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-500"
+                    [routerLink]="['/dashboard/approval', approval.id]"
+                    style="outline: none"
+                  >
+                    Aprovar
+                    <span>
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        class="transform transition-transform duration-500 ease-in-out"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class="relative flex flex-col min-w-0 break-words w-full shadow-lg rounded"
+    >
+      <div class="rounded-t mb-0 px-0 border-0">
+        <div class="seccion-header">
+          <h3 class="seccion-title">Administración</h3>
+        </div>
+        <div class="p-3 h-52">
+          <div
+            class="shadow-lg rounded-md flex items-center justify-between p-3 border-b-4 border-gray-600 text-neutral-800 font-medium"
+          >
+            <div class="icon-container">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="34"
+                height="34"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-browser-plus"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path
+                  d="M4 4m0 1a1 1 0 0 1 1 -1h14a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-14a1 1 0 0 1 -1 -1z"
+                />
+                <path d="M4 8h16" />
+                <path d="M8 4v4" />
+                <path d="M10 14h4" />
+                <path d="M12 12v4" />
+              </svg>
+            </div>
+            <div class="text-right">
+              <p class="text-2xl">{{ totalNewTickets }}</p>
+              <p>Solicitudes Nuevas</p>
+            </div>
+          </div>
+          <div
+            class="shadow-lg rounded-md flex items-center justify-between p-3 border-b-4 border-gray-600 text-neutral-800 font-medium"
+          >
+            <div class="icon-container">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="34"
+                height="34"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-browser-check"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path
+                  d="M4 4m0 1a1 1 0 0 1 1 -1h14a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-14a1 1 0 0 1 -1 -1z"
+                />
+                <path d="M4 8h16" />
+                <path d="M8 4v4" />
+                <path d="M9.5 14.5l1.5 1.5l3 -3" />
+              </svg>
+            </div>
+            <div class="text-right">
+              <p class="text-2xl">{{ totalResolvedTickets }}</p>
+              <p>Solicitudes Cerradas</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="relative flex flex-col w-full shadow-lg rounded">
+      <div class="rounded-t mb-0 px-0 border-0">
+        <div class="seccion-header">
+          <h3 class="seccion-title">Recordatorios</h3>
+        </div>
+        <div class="block w-full">ingresar tareas</div>
+      </div>
+    </div>
+  </div>
+</div>

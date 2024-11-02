@@ -44,6 +44,7 @@ export default class LoginComponent {
         this._authService.login(username, password).subscribe({
           error: (errorData) => {
             this.errorMessage = errorData;
+            console.log(this.errorMessage);
             this.loginForm.reset();
           },
           complete: () => {

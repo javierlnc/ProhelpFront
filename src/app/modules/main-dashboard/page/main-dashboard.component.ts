@@ -5,6 +5,10 @@ import { SidebarComponent } from '@layout/sidebar/sidebar.component';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { TicketsService } from '@services/tickets.service';
 import { toast } from 'ngx-sonner';
+import { TaskService } from '@services/task.service';
+import { TaskResponse } from '@interfaces/task-response';
+import { TicketResponse } from '@interfaces/ticket-response';
+import { UsermanagmentService } from '@services/usermanagment.service';
 
 @Component({
   selector: 'app-main-dashboard',
@@ -22,10 +26,20 @@ import { toast } from 'ngx-sonner';
 export default class MainDashboardComponent implements OnInit {
   tickets: any[] = [];
   approvalList: any[] = [];
-  constructor(private ticketService: TicketsService) {}
+  taskList: TaskResponse[] = [];
+  totalResolvedTickets!: number;
+  totalNewTickets!: number;
+  showModal: boolean = false;
+
+  constructor(
+    private ticketService: TicketsService,
+    private taskService: TaskService,
+    private usermanagmentService: UsermanagmentService
+  ) {}
   ngOnInit(): void {
     this.getTickets();
     this.getApprovalList();
+    this.getTaskList();
   }
   getApprovalList(): void {
     this.ticketService.getApprovingTickets().subscribe({
@@ -43,11 +57,39 @@ export default class MainDashboardComponent implements OnInit {
     this.ticketService.getTicketsListByUser().subscribe({
       next: (res: any[]) => {
         this.tickets = res.filter((res) => res.status !== 'RESOLVED');
+        this.totalResolvedTickets = res.filter(
+          (ticket) => ticket.status === 'RESOLVED'
+        ).length;
+        this.totalNewTickets = res.filter(
+          (ticket) => ticket.status === 'NEW'
+        ).length;
       },
       error: (err) => {
         const errorMsg = err?.error?.message || 'Error al obtener los tickets';
         toast.error(errorMsg);
       },
     });
+  }
+  getTaskList(): void {
+    this.taskService.getTaskForUser().subscribe({
+      next: (res: TaskResponse[]) => {
+        this.taskList = res.filter((res) => res.status === 'OPEN');
+      },
+    });
+  }
+  checkTask(taskId: number): void {
+    debugger;
+    this.taskService.closeTask(taskId).subscribe({
+      next: () => {
+        toast.success('Se ha cerrado la tarea');
+        this.getTaskList();
+      },
+      error: (err) => {
+        toast.error('No se pudo cerrar la tarea');
+      },
+    });
+  }
+  openModal(): void {
+    this.showModal = true;
   }
 }

@@ -4,7 +4,7 @@ export default [
   {
     path: 'main',
     loadComponent: () =>
-      import('@modules/main-dashboard/main-dashboard.component'),
+      import('@modules/main-dashboard/page/main-dashboard.component'),
   },
   {
     path: 'admintools',
