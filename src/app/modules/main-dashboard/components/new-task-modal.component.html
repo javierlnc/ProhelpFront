@@ -1,0 +1,80 @@
+<div
+  tabindex="-1"
+  class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
+  (click)="closeModal()"
+>
+  <div
+    class="realtive p-4 w-full max-w-xl max-h-full"
+    (click)="$event.stopPropagation()"
+  >
+    <div class="relative bg-neutral-800 rounded-lg shadow-sm">
+      <div
+        class="flex items-center justify-between p-4 border-b rounded-t md:p-5"
+      >
+        <h3 class="text-lg font-semibold text-gray-200">Crear tarea</h3>
+        <button
+          class="text-gray-400 p-1.5 bg-transparent hover:bg-lime-200 hover:text-black"
+          (click)="closeModal()"
+        >
+          <svg
+            class="w-3 h-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+            />
+          </svg>
+        </button>
+      </div>
+      <form [formGroup]="createForm" (submit)="submitForm()" class="p-4 md:p-5">
+        <div class="grid md:grid-cols-2 md:gap-6">
+          <div class="mb-4">
+            <label class="form-label">Para la solicitud:</label>
+            <select formControlName="assignTicketId" class="input-field">
+              <option value="" disabled selected hidden>
+                Selecciona una solicitud
+              </option>
+              <option *ngFor="let ticket of tickets" [value]="ticket.id">
+                {{ ticket.subject }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-4" *ngIf="isAdmin">
+            <label class="form-label">Tecnico:</label>
+            <select formControlName="responsibleUserId" class="input-field">
+              <option value="" disabled selected hidden>
+                Selecciona un tecnico
+              </option>
+              <option *ngFor="let user of users" [value]="user.id">
+                {{ user.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label for="" class="form-label">Nombre: </label>
+          <input type="text" formControlName="name" class="input-field" />
+        </div>
+        <div class="mb-4">
+          <label for="" class="form-label">Descripcion</label
+          ><textarea
+            formControlName="description"
+            rows="4"
+            class="input-field"
+          ></textarea>
+        </div>
+        <div class="flex items-center justify-between mt-6">
+          <button class="button-primary" type="submit">Crear</button>
+          <button class="button-secondary">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

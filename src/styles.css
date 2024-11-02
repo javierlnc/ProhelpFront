@@ -11,6 +11,10 @@
 .input-field {
   @apply bg-neutral-700 border border-neutral-700 text-gray-200 rounded-lg focus:ring-lime-300 focus:border-lime-300 block w-full p-3;
 }
-button:disabled{
-  @apply bg-gray-400 disabled:text-gray-600 disabled:cursor-not-allowed
+button:disabled {
+  @apply bg-gray-400 disabled:text-gray-600 disabled:cursor-not-allowed;
+}
+
+.form-label {
+  @apply block mb-2 text-sm font-medium text-gray-200;
 }
