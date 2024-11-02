@@ -26,6 +26,17 @@ export class TaskService {
       })
       .pipe(catchError(this.handleError));
   }
+  closeTask(taskId: number): Observable<any> {
+    return this.http
+      .put(
+        `${this._basic_url}api/task/${taskId}/close`,
+        {},
+        {
+          headers: this.createAuthorizationHeader(),
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
 
   createAuthorizationHeader() {
     return new HttpHeaders({
