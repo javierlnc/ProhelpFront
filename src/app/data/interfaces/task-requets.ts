@@ -1,6 +1,6 @@
 export interface TaskResquest {
   name: string;
   description: string;
-  assignTicketID: number;
+  assignTicketId: number;
   responsibleUserId: number;
 }

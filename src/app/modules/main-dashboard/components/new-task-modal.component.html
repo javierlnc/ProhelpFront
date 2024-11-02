@@ -1,0 +1,111 @@
+<div
+  tabindex="-1"
+  class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
+  (click)="closeModal()"
+>
+  <div
+    class="relative p-4 w-full max-w-xl max-h-full"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- Modal Content Wrapper -->
+    <div class="bg-neutral-800 rounded-lg shadow-lg overflow-hidden">
+      <!-- Modal Header -->
+      <div
+        class="flex items-center justify-between p-4 border-b border-gray-700"
+      >
+        <h3 class="text-lg font-semibold text-gray-200">Crear tarea</h3>
+        <button
+          class="text-gray-400 hover:bg-lime-200 hover:text-black p-1.5 rounded-full"
+          (click)="closeModal()"
+        >
+          <svg
+            class="w-4 h-4"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+            />
+          </svg>
+        </button>
+      </div>
+      <!-- Modal Form -->
+      <form [formGroup]="createForm" (ngSubmit)="submitForm()" class="p-5">
+        <div class="grid gap-6 md:grid-cols-2">
+          <!-- Ticket Selection -->
+          <div>
+            <label class="form-label">Para la solicitud:</label>
+            <select formControlName="assignTicketId" class="input-field">
+              <option value="" disabled selected hidden>
+                Selecciona una solicitud
+              </option>
+              <option *ngFor="let ticket of tickets" [value]="ticket.id">
+                {{ ticket.subject }}
+              </option>
+            </select>
+            <div
+              *ngIf="isRequired('assignTicketId')"
+              class="text-red-400 text-sm mt-2"
+            >
+              Seleccione una solicitud para la tarea
+            </div>
+          </div>
+          <!-- Technician Selection (Only for Admin) -->
+          <div *ngIf="isAdmin">
+            <label class="form-label">Técnico:</label>
+            <select formControlName="responsibleUserId" class="input-field">
+              <option value="" disabled selected hidden>
+                Selecciona un técnico
+              </option>
+              <option *ngFor="let user of users" [value]="user.id">
+                {{ user.name }}
+              </option>
+            </select>
+            <div
+              *ngIf="isRequired('responsibleUserId')"
+              class="text-red-400 text-sm mt-2"
+            >
+              Se requiere técnico para la tarea
+            </div>
+          </div>
+        </div>
+        <!-- Task Name -->
+        <div class="mt-4">
+          <label class="form-label">Nombre:</label>
+          <input type="text" formControlName="name" class="input-field" />
+          <div *ngIf="isRequired('name')" class="text-red-400 text-sm mt-2">
+            Se requiere un nombre
+          </div>
+        </div>
+        <!-- Description -->
+        <div class="mt-4">
+          <label class="form-label">Descripción:</label>
+          <textarea
+            formControlName="description"
+            rows="4"
+            class="input-field"
+          ></textarea>
+          <div
+            *ngIf="isRequired('description')"
+            class="text-red-400 text-sm mt-2"
+          >
+            Se requiere una Descripción
+          </div>
+        </div>
+        <!-- Action Buttons -->
+        <div class="flex justify-end gap-4 mt-6">
+          <button type="submit" class="button-primary">Crear</button>
+          <button type="button" (click)="closeModal()" class="button-secondary">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
