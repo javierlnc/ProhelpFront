@@ -9,6 +9,7 @@ import {
 import { TaskService } from '@services/task.service';
 import { TicketsService } from '@services/tickets.service';
 import { UsermanagmentService } from '@services/usermanagment.service';
+import { isFieldRequired } from '@utils/validators/validators';
 import { toast } from 'ngx-sonner';
 
 @Component({
@@ -23,9 +24,10 @@ export class NewTaskModalComponent implements OnInit {
   tickets: any[] = [];
   users: any[] = [];
   createForm: FormGroup;
-  role = localStorage.getItem('role');
-  isAdmin = this.role === 'ADMIN';
-  userId = localStorage.getItem('id');
+  role: string | null = localStorage.getItem('role');
+  userId: string | null = localStorage.getItem('id');
+  isAdmin: boolean = this.role === 'ADMIN';
+
   constructor(
     private ticketService: TicketsService,
     private userManagmentService: UsermanagmentService,
@@ -34,27 +36,41 @@ export class NewTaskModalComponent implements OnInit {
   ) {
     this.createForm = this.initForm();
   }
+
   ngOnInit(): void {
     this.getTickets();
     this.getUsersList();
+
     if (!this.isAdmin && this.userId) {
       this.createForm.patchValue({
         responsibleUserId: this.userId,
       });
     }
   }
+
   private initForm(): FormGroup {
     return this.formBuilder.group({
       name: ['', Validators.required],
-      descrition: ['', Validators.required],
+      description: ['', Validators.required],
       assignTicketId: ['', Validators.required],
       responsibleUserId: ['', Validators.required],
     });
   }
+
   getTickets(): void {
+    if (!this.userId || !this.role) {
+      toast.error('Error al obtener el usuario autenticado');
+      return;
+    }
+
     this.ticketService.getTicketsListByUser().subscribe({
       next: (res: any[]) => {
-        this.tickets = res.filter((res) => res.status !== 'RESOLVED');
+        this.tickets = res.filter((ticket) => {
+          const isOpen = ticket.status === 'OPEN';
+          return this.isAdmin
+            ? isOpen
+            : isOpen && ticket.assignedTechnician?.id === this.userId;
+        });
       },
       error: (err) => {
         const errorMsg = err?.error?.message || 'Error al obtener los tickets';
@@ -62,26 +78,36 @@ export class NewTaskModalComponent implements OnInit {
       },
     });
   }
+
   getUsersList(): void {
     this.userManagmentService.getUsersFilter().subscribe({
       next: (res) => (this.users = res),
       error: (err) => this.handleError(err, 'Error al cargar técnicos'),
     });
   }
+
   closeModal(): void {
     this.close.emit();
   }
+
   private handleError(error: any, message: string): void {
     const errorMsg = error?.error?.message || message;
     toast.error(errorMsg);
   }
+  isRequired(field: string): boolean {
+    return isFieldRequired(field, this.createForm);
+  }
   submitForm() {
-    this.taskService.createTask(this.createForm.value).subscribe({
-      next: () => {
-        toast.success('Solicitud asignada');
-        this.closeModal();
-      },
-      error: (err) => this.handleError(err, 'Error al asignar solicitud'),
-    });
+    if (this.createForm.valid) {
+      this.taskService.createTask(this.createForm.value).subscribe({
+        next: () => {
+          toast.success('Solicitud asignada');
+          this.closeModal();
+        },
+        error: (err) => this.handleError(err, 'Error al asignar solicitud'),
+      });
+    } else {
+      toast.error('Por favor, completa todos los campos requeridos');
+    }
   }
 }
