@@ -22,7 +22,7 @@ export default [
   },
   {
     path: 'reports',
-    loadComponent: () => import('@modules/reports/reports.component'),
+    loadComponent: () => import('@modules/reports/page/reports.component'),
   },
 
   {

@@ -3,22 +3,23 @@
   <app-card
     title="{{ copies[0]?.title }}"
     description="{{ copies[0]?.description }}"
-    link="/dashboard/categories"
+    [clickAction]="reportGeneral.bind(this)"
     copyButton="Generar"
     class="bg-white shadow rounded-lg"
   ></app-card>
   <app-card
     title="{{ copies[1]?.title }}"
     description="{{ copies[1]?.description }}"
-    link="/dashboard/categories"
+    [clickAction]="reportSpecific.bind(this)"
     copyButton="Generar"
     class="bg-white shadow rounded-lg"
   ></app-card>
   <app-card
     title="{{ copies[2]?.title }}"
     description="{{ copies[2]?.description }}"
-    link="/dashboard/categories"
+    [clickAction]="reportTechnicians.bind(this)"
     copyButton="Generar"
     class="bg-white shadow rounded-lg"
   ></app-card>
+  <app-grmodal (close)="closeModal()" *ngIf="showModal"></app-grmodal>
 </div>
