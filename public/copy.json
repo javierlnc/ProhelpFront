@@ -15,5 +15,22 @@
       "title": "Genera Reportes",
       "description": "Obtén reportes detallados de las solicitudes, ya sea por técnico o de todo el equipo. Mejora la toma de decisiones con información clara y precisa."
     }
+  ],
+  "reportes": [
+    {
+      "name": "general",
+      "title": "Reporte general",
+      "description": "Obtén una visión completa de todas las solicitudes en tu sistema. Este reporte general te permite monitorear el estado, tendencias y distribución de las solicitudes para una administración eficiente."
+    },
+    {
+      "name": "por tecnicos",
+      "title": "Reporte de un técnico específico",
+      "description": "Analiza el rendimiento y la carga de trabajo de un técnico específico. Este reporte te proporciona detalles sobre las solicitudes asignadas, su estado y tiempos de resolución para mejorar la eficiencia individual."
+    },
+    {
+      "name": "de tecnicos",
+      "title": "Reporte de técnicos general",
+      "description": "Visualiza el desempeño de todo el equipo de técnicos. Este reporte general te ofrece una perspectiva detallada sobre las solicitudes manejadas por cada técnico, permitiendo identificar áreas de mejora y optimizar la asignación de tareas."
+    }
   ]
 }

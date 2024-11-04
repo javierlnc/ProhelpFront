@@ -3,15 +3,18 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CopyServiceService {
-  private jsonUrl = "/copy.json"
+  private jsonUrl = '/copy.json';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   getHerramientasCards(): Observable<any> {
-    return this.http.get(this.jsonUrl).pipe(
-      map((data: any) => data.herramientas)
-    );
+    return this.http
+      .get(this.jsonUrl)
+      .pipe(map((data: any) => data.herramientas));
+  }
+  getReportesCards(): Observable<any> {
+    return this.http.get(this.jsonUrl).pipe(map((data: any) => data.reportes));
   }
 }
