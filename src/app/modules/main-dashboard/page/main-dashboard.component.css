@@ -1,0 +1,12 @@
+.header-table {
+  @apply px-4 bg-gray-100 text-gray-600 align-middle border-neutral-600 border-solid py-3 text-xs uppercase border-l-0 border-r-0 text-left;
+}
+.seccion-header {
+  @apply flex flex-wrap items-center px-4 py-2 bg-neutral-800 rounded-t;
+}
+.seccion-title {
+  @apply font-semibold text-base text-gray-50;
+}
+.icon-container {
+  @apply flex justify-center items-center w-14 h-14 bg-lime-300 rounded-full transition-all duration-300 transform group-hover:rotate-12;
+}

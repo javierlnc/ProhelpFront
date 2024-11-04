@@ -1,0 +1,35 @@
+.panel-card {
+  @apply relative flex flex-col min-w-0 break-words w-full shadow-lg rounded p-4;
+}
+
+.seccion-title {
+  @apply text-lg font-semibold text-gray-800 mb-2;
+}
+
+.table {
+  @apply w-full border-collapse;
+}
+
+.table-cell {
+  @apply text-xs align-middle p-2;
+}
+
+.header-table {
+  @apply text-sm font-semibold text-neutral-700 p-2;
+}
+
+.chart-container {
+  @apply shadow-lg rounded-lg overflow-hidden py-3 flex justify-center items-center;
+}
+
+.info-card {
+  @apply flex flex-col items-center space-y-2 p-5;
+}
+
+.info-card-count {
+  @apply text-6xl font-bold tracking-tight;
+}
+
+.info-card-text {
+  @apply text-lg font-medium;
+}
