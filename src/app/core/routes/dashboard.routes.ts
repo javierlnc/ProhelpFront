@@ -42,8 +42,10 @@ export default [
   {
     path: 'approval/:id',
     loadComponent: () =>
-      import(
-        '@modules/approvalTicket/page/approval-ticket/approval-ticket.component'
-      ),
+      import('@modules/approvalTicket/page/approval-ticket.component'),
+  },
+  {
+    path: 'panel',
+    loadComponent: () => import('@modules/panel/page/panel.component'),
   },
 ] as Routes;
