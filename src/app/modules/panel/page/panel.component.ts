@@ -12,6 +12,7 @@ import {
   Legend,
   PieController,
 } from 'chart.js';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-panel',
@@ -23,12 +24,12 @@ import {
 export default class PanelComponent implements OnInit {
   ticketsByCategories: any;
   ticketsByUsers: any;
-  totalTickets: any;
-  ticketsOverdue: any;
-  openTicketsCount!: number;
-  pendingApprovalCount!: number;
-  resolvedTicketsCount!: number;
-  tecUser!: number;
+  totalTickets: number = 0;
+  ticketsOverdue: number = 0;
+  openTicketsCount: number = 0;
+  pendingApprovalCount: number = 0;
+  resolvedTicketsCount: number = 0;
+  tecUser: number = 0;
   private chart!: any;
 
   constructor(
@@ -39,71 +40,45 @@ export default class PanelComponent implements OnInit {
 
   ngOnInit(): void {
     Chart.register(PieController, ArcElement, Tooltip, Legend);
-
-    this.getTicketByCategories();
-    this.getTicketsByUser();
-    this.getTicketsList();
-    this.getTicketsOverdue();
-    this.getUsersList();
-  }
-  getTicketsOverdue() {
-    this.panelService.getTicketsOverdue().subscribe({
-      next: (res) => {
-        this.ticketsOverdue = res.length;
-      },
-    });
+    this.loadData();
   }
 
-  getTicketByCategories() {
-    this.panelService.getListCategories().subscribe({
+  private loadData(): void {
+    forkJoin({
+      ticketsByCategories: this.panelService.getListCategories(),
+      ticketsByUsers: this.panelService.getTicketsList(),
+      ticketsList: this.ticketService.getTicketsListByUser(),
+      ticketsOverdue: this.panelService.getTicketsOverdue(),
+      usersList: this.usermanagmentService.getUsersFilter(),
+    }).subscribe({
       next: (res) => {
-        this.ticketsByCategories = res;
-      },
-    });
-  }
-
-  getTicketsByUser() {
-    this.panelService.getTicketsList().subscribe({
-      next: (res) => {
-        this.ticketsByUsers = res;
-        console.log(this.ticketsByUsers);
-      },
-    });
-  }
-
-  getTicketsList(): void {
-    this.ticketService.getTicketsListByUser().subscribe({
-      next: (res) => {
-        this.totalTickets = res.length;
-
-        this.openTicketsCount = res.filter(
-          (ticket: any) => ticket.status === 'OPEN'
-        ).length;
-        this.pendingApprovalCount = res.filter(
-          (ticket: any) => ticket.status === 'PENDING_APPROVAL'
-        ).length;
-        this.resolvedTicketsCount = res.filter(
-          (ticket: any) => ticket.status === 'RESOLVED'
-        ).length;
-        this.loadPieChart();
+        this.ticketsByCategories = res.ticketsByCategories;
+        this.ticketsByUsers = res.ticketsByUsers;
+        this.ticketsOverdue = res.ticketsOverdue.length;
+        this.tecUser = res.usersList.length;
+        this.processTicketsList(res.ticketsList);
       },
       error: (err) => {
-        console.error('Error al obtener la lista de tickets', err);
-      },
-    });
-  }
-  getUsersList() {
-    this.usermanagmentService.getUsersFilter().subscribe({
-      next: (res) => {
-        this.tecUser = res.length;
-        console.log(res);
-        console.log(this.tecUser);
+        console.error('Error al cargar datos del panel', err);
       },
     });
   }
 
-  loadPieChart(): void {
-    // Verifica si el gráfico ya existe y destrúyelo si es necesario
+  private processTicketsList(tickets: any[]): void {
+    this.totalTickets = tickets.length;
+    this.openTicketsCount = tickets.filter(
+      (ticket) => ticket.status === 'OPEN'
+    ).length;
+    this.pendingApprovalCount = tickets.filter(
+      (ticket) => ticket.status === 'PENDING_APPROVAL'
+    ).length;
+    this.resolvedTicketsCount = tickets.filter(
+      (ticket) => ticket.status === 'RESOLVED'
+    ).length;
+    this.loadPieChart();
+  }
+
+  private loadPieChart(): void {
     if (this.chart) {
       this.chart.destroy();
     }
@@ -142,7 +117,6 @@ export default class PanelComponent implements OnInit {
       },
     };
 
-    // Crea y asigna el gráfico a la propiedad
     this.chart = new Chart('chartPie', configPie);
   }
 }
