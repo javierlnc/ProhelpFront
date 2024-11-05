@@ -21,5 +21,9 @@
     copyButton="Generar"
     class="bg-white shadow rounded-lg"
   ></app-card>
-  <app-grmodal (close)="closeModal()" *ngIf="showModal"></app-grmodal>
+  <app-grmodal
+    (close)="closeModal()"
+    [typeReport]="typeReport"
+    *ngIf="showModal"
+  ></app-grmodal>
 </div>

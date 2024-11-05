@@ -12,14 +12,18 @@ import { CommonModule } from '@angular/common';
   styleUrl: './reports.component.css',
 })
 export default class ReportsComponent implements OnInit {
-  showModal = true;
+  showModal = false;
+  typeReport!: string;
   reportTechnicians(): void {
+    this.typeReport = 'tecnico';
     this.showModal = true;
   }
   reportSpecific(): void {
+    this.typeReport = 'especifico';
     this.showModal = true;
   }
   reportGeneral(): void {
+    this.typeReport = 'general';
     this.showModal = true;
   }
   closeModal(): void {
