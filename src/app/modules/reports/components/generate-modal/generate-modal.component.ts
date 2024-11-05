@@ -1,3 +1,4 @@
+import { ReportService } from './../../../../data/services/report.service';
 import {
   Component,
   DebugElement,
@@ -35,7 +36,8 @@ export class GenerateModalComponent implements OnInit {
   reportForm: FormGroup;
   constructor(
     private userManagmentService: UsermanagmentService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private reportService: ReportService
   ) {
     this.reportForm = this.initForm();
   }
@@ -94,6 +96,18 @@ export class GenerateModalComponent implements OnInit {
       toast.error('Por favor, complete todos los campos obligatorios.');
       return;
     }
+    console.log(this.reportForm.value);
+    this.reportService.generateReport(this.reportForm.value).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.close.emit();
+      },
+      error: (err) => {
+        const errorMsg =
+          err?.error?.message || 'Error al actualizar el usuario';
+        toast.error(errorMsg);
+      },
+    });
   }
   private handleError(error: any, message: string): void {
     const errorMsg = error?.error?.message || message;
