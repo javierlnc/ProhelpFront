@@ -32,5 +32,42 @@
       "title": "Reporte de técnicos general",
       "description": "Visualiza el desempeño de todo el equipo de técnicos. Este reporte general te ofrece una perspectiva detallada sobre las solicitudes manejadas por cada técnico, permitiendo identificar áreas de mejora y optimizar la asignación de tareas."
     }
+  ],
+  "recordatorios": [
+    {
+      "name": "general",
+      "title": "Recordatoria 1",
+      "description": "Haz un repaso general de las tareas y aprobaciones pendientes. La revisión es esencial para mantener todo bajo control."
+    },
+    {
+      "name": "general",
+      "title": "Recordatoria 2",
+      "description": "¿Has verificado las fechas límites? ¡Recuerda que el tiempo es clave!"
+    },
+    {
+      "name": "general",
+      "title": "Recordatorio 3",
+      "description": "¡No dejes que se te escape una fecha límite! Asegúrate de estar al tanto de todas las tareas importantes."
+    },
+    {
+      "name": "general",
+      "title": "Recordatorio 4",
+      "description": "Antes de avanzar, revisa si hay tareas o solicitudes que necesiten tu atención."
+    },
+    {
+      "name": "general",
+      "title": "Recordatorio 5",
+      "description": "¿Estás al tanto de las aprobaciones que requieren tu atención? ¡No lo dejes para después!"
+    },
+    {
+      "name": "general",
+      "title": "Recordatorio 6",
+      "description": "Revisa las solicitudes pendientes y asigna un técnico para avanzar en el proceso"
+    },
+    {
+      "name": "general",
+      "title": "Recordatorio 7",
+      "description": "¡Atención! Hay solicitudes que aún no tienen un técnico asignado. Asegúrate de asignarlas lo antes posible."
+    }
   ]
 }
