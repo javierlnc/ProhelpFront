@@ -57,7 +57,11 @@
       </svg>
       <div>Home</div>
     </a>
-    <a class="sidebar--max" [routerLink]="['/dashboard/solicitud']">
+    <a
+      class="sidebar--max"
+      [routerLink]="['/dashboard/tickets']"
+      (click)="toggleSidebar()"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -77,6 +81,7 @@
       *ngIf="rol !== 'GEN'"
       class="sidebar--max"
       [routerLink]="['/dashboard/panel']"
+      (click)="toggleSidebar()"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -104,6 +109,7 @@
       *ngIf="rol === 'ADMIN'"
       class="sidebar--max"
       [routerLink]="['/dashboard/admintools']"
+      (click)="toggleSidebar()"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
