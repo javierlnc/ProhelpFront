@@ -17,4 +17,9 @@ export class CopyServiceService {
   getReportesCards(): Observable<any> {
     return this.http.get(this.jsonUrl).pipe(map((data: any) => data.reportes));
   }
+  getReminder() {
+    return this.http
+      .get(this.jsonUrl)
+      .pipe(map((data: any) => data.recordatorios));
+  }
 }

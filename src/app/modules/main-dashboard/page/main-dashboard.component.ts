@@ -1,3 +1,4 @@
+import { CopyServiceService } from '@services/copy-service.service';
 import { CloseModalComponent } from './../../assign-ticket/components/close-modal/close-modal.component';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -33,13 +34,16 @@ export default class MainDashboardComponent implements OnInit {
   totalResolvedTickets!: number;
   totalNewTickets!: number;
   showModal: boolean = false;
+  copyForReminder: any;
 
   constructor(
     private ticketService: TicketsService,
     private taskService: TaskService,
-    private usermanagmentService: UsermanagmentService
+    private usermanagmentService: UsermanagmentService,
+    private copyService: CopyServiceService
   ) {}
   ngOnInit(): void {
+    this.getCopy();
     this.getTickets();
     this.getApprovalList();
     this.getTaskList();
@@ -81,7 +85,6 @@ export default class MainDashboardComponent implements OnInit {
     });
   }
   checkTask(taskId: number): void {
-    debugger;
     this.taskService.closeTask(taskId).subscribe({
       next: () => {
         toast.success('Se ha cerrado la tarea');
@@ -89,6 +92,15 @@ export default class MainDashboardComponent implements OnInit {
       },
       error: (err) => {
         toast.error('No se pudo cerrar la tarea');
+      },
+    });
+  }
+  getCopy() {
+    this.copyService.getReminder().subscribe({
+      next: (res) => {
+        console.log(res);
+        this.copyForReminder = res[Math.floor(Math.random() * 5)];
+        console.log(this.copyForReminder);
       },
     });
   }
