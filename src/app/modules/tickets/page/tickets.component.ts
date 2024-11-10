@@ -5,6 +5,7 @@ import { TicketsService } from '@services/tickets.service';
 import { toast } from 'ngx-sonner';
 import { StatusMapping } from '@utils/status-mapping/status-mapping';
 import { Router } from '@angular/router';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-solicitudes',
@@ -15,7 +16,9 @@ import { Router } from '@angular/router';
 })
 export default class TicketsComponent implements OnInit {
   private ticketService = inject(TicketsService);
+  private authService = inject(AuthService);
   private router = inject(Router);
+  rol = this.authService.getUser()?.rol;
   tickets: any[] = []; // Cambiado de 'any' a 'Ticket' (si tienes un modelo)
 
   showModal = false;

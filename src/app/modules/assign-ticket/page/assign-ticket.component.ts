@@ -13,6 +13,7 @@ import { CloseModalComponent } from '../components/close-modal/close-modal.compo
 import { UsermanagmentService } from '@services/usermanagment.service';
 import { TicketsService } from '@services/tickets.service';
 import { TicketResponse } from '@interfaces/ticket-response';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-assign-ticket',
@@ -29,6 +30,7 @@ export default class AssignTicketComponent implements OnInit {
   users: any[] = [];
   isCloseEnabled: boolean = false;
   showModal = false;
+  rol = this.authService.getUser()?.rol;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,7 +38,8 @@ export default class AssignTicketComponent implements OnInit {
     private formBuilder: FormBuilder,
     private datePipe: DatePipe,
     private router: Router,
-    private userManagmentService: UsermanagmentService
+    private userManagmentService: UsermanagmentService,
+    private authService: AuthService
   ) {
     this.ticketForm = this.initForm();
   }

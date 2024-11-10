@@ -105,9 +105,7 @@ export default class MainDashboardComponent implements OnInit {
   getCopy() {
     this.copyService.getReminder().subscribe({
       next: (res) => {
-        console.log(res);
         this.copyForReminder = res[Math.floor(Math.random() * 5)];
-        console.log(this.copyForReminder);
       },
     });
   }

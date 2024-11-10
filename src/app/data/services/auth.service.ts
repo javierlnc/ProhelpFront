@@ -30,7 +30,7 @@ export class AuthService {
         }),
         catchError((error) => {
           debugger;
-          console.log('aut' + error.message);
+          console.log('aut' + error.error.details);
           return this.handleError(error);
         })
       );
@@ -71,7 +71,7 @@ export class AuthService {
 
     if (error.error && error.message) {
       // Si el backend envía un mensaje de error personalizado
-      errorMessage = error.error.message;
+      errorMessage = error.error.details;
     } else if (error.status === 401) {
       errorMessage = 'Credenciales incorrectas';
     } else if (error.status === 0) {

@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { AuthService } from '@services/auth.service';
 import { TaskService } from '@services/task.service';
 import { TicketsService } from '@services/tickets.service';
 import { UsermanagmentService } from '@services/usermanagment.service';
@@ -24,12 +25,13 @@ export class NewTaskModalComponent implements OnInit {
   tickets: any[] = [];
   users: any[] = [];
   createForm: FormGroup;
-  role: string | null = localStorage.getItem('role');
-  userId: string | null = localStorage.getItem('id');
+  role = this.authService.getUser()?.rol;
+  userId = this.authService.getUser()?.userId;
   isAdmin: boolean = this.role === 'ADMIN';
 
   constructor(
     private ticketService: TicketsService,
+    private authService: AuthService,
     private userManagmentService: UsermanagmentService,
     private formBuilder: FormBuilder,
     private taskService: TaskService

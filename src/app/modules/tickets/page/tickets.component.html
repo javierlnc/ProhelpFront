@@ -56,7 +56,7 @@
           <th scope="col" class="px-6 py-3 text-center">Fecha Creación</th>
           <th scope="col" class="px-6 py-3 text-center">Fecha Cierre</th>
           <th scope="col" class="px-6 py-3 text-center">Técnico</th>
-          <th scope="col" class="px-6 py-3">Acción</th>
+          <th scope="col" class="px-6 py-3" *ngIf="rol !== 'GEN'">Acción</th>
         </tr>
       </thead>
       <tbody>
@@ -113,6 +113,7 @@
           <th
             scope="row"
             class="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap"
+            *ngIf="rol !== 'GEN'"
           >
             <a
               class="font-medium text-green-500 hover:ring-green-700 cursor-pointer"
