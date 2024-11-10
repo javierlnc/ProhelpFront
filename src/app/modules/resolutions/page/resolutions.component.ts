@@ -63,4 +63,16 @@ export default class ResolutionComponent implements OnInit {
     this.isDeleteModal = true;
     console.log('delete ' + this.isDeleteModal + 'Edit ' + this.isEditModal);
   }
+  next() {
+    this.currentPage += 1;
+    this.getResolutions();
+  }
+  previus() {
+    if (this.currentPage === 1) {
+      return;
+    } else {
+      this.currentPage -= 1;
+      this.getResolutions();
+    }
+  }
 }
