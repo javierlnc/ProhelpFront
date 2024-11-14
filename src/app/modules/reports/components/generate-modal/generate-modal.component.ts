@@ -88,7 +88,7 @@ export class GenerateModalComponent implements OnInit {
   submitForm() {
     if (this.isSpecific === false) {
       if (this.reportForm.value.assignedTechnicianId === '') {
-        this.reportForm.patchValue({ assignedTechnicianId: '1' });
+        this.reportForm.patchValue({ assignedTechnicianId: 1 });
       }
     }
     this.populateReportForm();

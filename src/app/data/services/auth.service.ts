@@ -56,7 +56,7 @@ export class AuthService {
       userId: Number(localStorage.getItem('userId')),
     };
 
-    return user.username ? user : null; // Devuelve el objeto de usuario si el nombre está presente
+    return user; // Devuelve el objeto de usuario si el nombre está presente
   }
 
   private setSession(authResult: AuthResponse): void {

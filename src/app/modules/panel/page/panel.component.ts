@@ -1,3 +1,4 @@
+import { AuthService } from '@services/auth.service';
 import { UsermanagmentService } from '@services/usermanagment.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
@@ -31,11 +32,13 @@ export default class PanelComponent implements OnInit {
   resolvedTicketsCount: number = 0;
   tecUser: number = 0;
   private chart!: any;
+  rol = this.authService.getUser().rol;
 
   constructor(
     private panelService: PanelService,
     private ticketService: TicketsService,
-    private usermanagmentService: UsermanagmentService
+    private usermanagmentService: UsermanagmentService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +59,7 @@ export default class PanelComponent implements OnInit {
         this.ticketsByUsers = res.ticketsByUsers;
         this.ticketsOverdue = res.ticketsOverdue.length;
         this.tecUser = res.usersList.length;
+        console.log(res.ticketsList);
         this.processTicketsList(res.ticketsList);
       },
       error: (err) => {

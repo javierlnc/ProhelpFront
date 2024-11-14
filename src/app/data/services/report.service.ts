@@ -10,18 +10,10 @@ export class ReportService {
   private readonly _basic_url = 'http://localhost:8080/';
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  generateReport(reportDTO: any): Observable<any> {
-    let params = new HttpParams();
-    for (const key in reportDTO) {
-      if (reportDTO.hasOwnProperty(key) && reportDTO[key] !== null) {
-        params = params.append(key, reportDTO[key]);
-      }
-    }
-
+  generateReport(requestDTO: any): Observable<any> {
     return this.http
-      .get(`${this._basic_url}api/admin/report`, {
+      .post(`${this._basic_url}api/admin/report`, requestDTO, {
         headers: this.createAuthorizationHeader(),
-        params: params,
       })
       .pipe(catchError(this.handleError));
   }
