@@ -99,12 +99,16 @@ export class GenerateModalComponent implements OnInit {
     console.log(this.reportForm.value);
     this.reportService.generateReport(this.reportForm.value).subscribe({
       next: (res) => {
-        console.log(res);
+        const blob = new Blob([res], { type: 'application/pdf' }); // Recibimos el archivo
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Reporte.pdf'; // Nombre del archivo descargado
+        a.click();
         this.close.emit();
       },
       error: (err) => {
-        const errorMsg =
-          err?.error?.message || 'Error al actualizar el usuario';
+        const errorMsg = err?.error?.message || 'Error al generar el reporte';
         toast.error(errorMsg);
       },
     });
