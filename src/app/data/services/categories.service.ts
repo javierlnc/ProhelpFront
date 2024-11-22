@@ -3,43 +3,44 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Category } from '@interfaces/category';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoriesService {
-  private readonly _basic_url = 'http://localhost:8080/';
+  private readonly _basic_url = environment.apiUrl;
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   createCategoryDetails(categoryDTO: Category): Observable<any> {
-    return this.http.post(`${this._basic_url}api/admin/category`, categoryDTO, {
+    return this.http.post(`${this._basic_url}/admin/category`, categoryDTO, {
       headers: this.createAuthorizationHeader(),
     });
   }
   getAllCategories(pageNumber: number): Observable<any> {
     return this.http
-      .get(`${this._basic_url}api/admin/categories/${pageNumber}`, {
+      .get(`${this._basic_url}/admin/categories/${pageNumber}`, {
         headers: this.createAuthorizationHeader(),
       })
       .pipe(catchError(this.handleError));
   }
   getListCategories(): Observable<any> {
     return this.http
-      .get(`${this._basic_url}api/admin/category/all`, {
+      .get(`${this._basic_url}/admin/category/all`, {
         headers: this.createAuthorizationHeader(),
       })
       .pipe(catchError(this.handleError));
   }
   updateCategory(id: number, categoryDTO: any): Observable<any> {
     return this.http
-      .put(`${this._basic_url}api/admin/categories/${id}`, categoryDTO, {
+      .put(`${this._basic_url}/admin/categories/${id}`, categoryDTO, {
         headers: this.createAuthorizationHeader(),
       })
       .pipe(catchError(this.handleError));
   }
   deleteCategory(id: number) {
     return this.http
-      .delete(`${this._basic_url}api/admin/categories/${id}`, {
+      .delete(`${this._basic_url}/admin/categories/${id}`, {
         headers: this.createAuthorizationHeader(),
       })
       .pipe(catchError(this.handleError));

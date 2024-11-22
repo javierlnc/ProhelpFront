@@ -2,17 +2,18 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ReportService {
-  private readonly _basic_url = 'http://localhost:8080/';
+  private readonly _basic_url = environment.apiUrl;
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   generateReport(requestDTO: any): Observable<any> {
     return this.http
-      .post(`${this._basic_url}api/admin/report`, requestDTO, {
+      .post(`${this._basic_url}/admin/report`, requestDTO, {
         headers: this.createAuthorizationHeader(),
         responseType: 'blob' as 'json',
       })

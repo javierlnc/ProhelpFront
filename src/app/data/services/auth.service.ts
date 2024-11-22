@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { toast } from 'ngx-sonner';
 import { catchError, Observable, throwError, tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 export interface AuthResponse {
   jwt: string;
@@ -15,7 +16,7 @@ export interface AuthResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private _apiUrl = 'http://localhost:8080/api/auth';
+  private readonly _basic_url = environment.apiUrl;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -23,7 +24,7 @@ export class AuthService {
     const loginData = { username, password };
 
     return this.http
-      .post<AuthResponse>(`${this._apiUrl}/login`, loginData)
+      .post<AuthResponse>(`${this._basic_url}/auth/login`, loginData)
       .pipe(
         tap((response) => {
           this.setSession(response);
