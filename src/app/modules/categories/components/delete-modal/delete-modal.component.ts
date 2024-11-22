@@ -25,7 +25,8 @@ export class DeleteModalComponent {
         toast.success(`Categoría eliminada`);
       },
       error: (err) => {
-        const errorMsg = err?.error?.message || 'Error al eliminar el usuario';
+        const errorMsg =
+          err?.error?.message || 'Error al eliminar la categoría';
         toast.error(errorMsg);
       },
     });

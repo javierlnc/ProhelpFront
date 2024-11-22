@@ -51,7 +51,6 @@ export class CategoriesService {
     });
   }
   private handleError(error: any): Observable<never> {
-    // Maneja el error de manera más informativa
     console.error('An error occurred:', error);
     return throwError(
       () => new Error('Error en el servicio; intenta nuevamente más tarde.')

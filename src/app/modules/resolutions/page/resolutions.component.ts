@@ -44,7 +44,6 @@ export default class ResolutionComponent implements OnInit {
       });
     this.resolutionsService.getAllResoutionsList().subscribe((res) => {
       this.totalResolution = res.length;
-      console.log(res);
     });
   }
   openModal() {
@@ -66,7 +65,6 @@ export default class ResolutionComponent implements OnInit {
     this.showModal = false;
     this.isEditModal = false;
     this.isDeleteModal = true;
-    console.log('delete ' + this.isDeleteModal + 'Edit ' + this.isEditModal);
   }
   next() {
     this.currentPage += 1;

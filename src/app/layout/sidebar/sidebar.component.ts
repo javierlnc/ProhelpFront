@@ -26,7 +26,7 @@ import { AuthService } from '@services/auth.service';
       state(
         'closed',
         style({
-          transform: 'translateX()', // Ajustar según tu diseño
+          transform: 'translateX()',
           opacity: 1,
         })
       ),

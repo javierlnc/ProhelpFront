@@ -14,7 +14,7 @@ export class ReportService {
     return this.http
       .post(`${this._basic_url}api/admin/report`, requestDTO, {
         headers: this.createAuthorizationHeader(),
-        responseType: 'blob' as 'json', // Indicamos que esperamos un archivo binario
+        responseType: 'blob' as 'json',
       })
       .pipe(catchError(this.handleError));
   }

@@ -6,7 +6,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { ResolutionsService } from '../../../../data/services/resolutions.service';
+import { ResolutionsService } from '@services/resolutions.service';
 import {
   FormBuilder,
   FormGroup,
@@ -53,7 +53,7 @@ export class NewResolutionModalComponent {
           },
           error: (err) => {
             const errorMsg =
-              err?.error?.message || 'Error al actualizar la categoría';
+              err?.error?.message || 'Error al actualizar la resolución';
             toast.error(errorMsg);
           },
         });
@@ -66,7 +66,7 @@ export class NewResolutionModalComponent {
         next: () => {
           this.close.emit();
           const { name } = this.createForm.value;
-          toast.success(`Categoría "${name}" registrada con éxito`);
+          toast.success(`Resolución "${name}" registrada con éxito`);
         },
       });
     }

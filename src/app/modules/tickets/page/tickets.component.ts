@@ -19,7 +19,7 @@ export default class TicketsComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
   rol = this.authService.getUser()?.rol;
-  tickets: any[] = []; // Cambiado de 'any' a 'Ticket' (si tienes un modelo)
+  tickets: any[] = [];
 
   showModal = false;
 
@@ -39,7 +39,7 @@ export default class TicketsComponent implements OnInit {
     });
   }
   trackByTicketId(index: number, ticket: any): number {
-    return ticket.id; // o cualquier identificador único
+    return ticket.id;
   }
   getTicketStatusName(status: string): string {
     return StatusMapping[status as keyof typeof StatusMapping] || status;

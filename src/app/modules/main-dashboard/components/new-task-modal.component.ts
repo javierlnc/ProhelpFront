@@ -103,10 +103,10 @@ export class NewTaskModalComponent implements OnInit {
     if (this.createForm.valid) {
       this.taskService.createTask(this.createForm.value).subscribe({
         next: () => {
-          toast.success('Solicitud asignada');
+          toast.success('Tarea asignada');
           this.closeModal();
         },
-        error: (err) => this.handleError(err, 'Error al asignar solicitud'),
+        error: (err) => this.handleError(err, 'Error al crear la tarea'),
       });
     } else {
       toast.error('Por favor, completa todos los campos requeridos');
