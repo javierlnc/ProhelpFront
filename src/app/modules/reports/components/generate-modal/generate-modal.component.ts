@@ -99,11 +99,11 @@ export class GenerateModalComponent implements OnInit {
     console.log(this.reportForm.value);
     this.reportService.generateReport(this.reportForm.value).subscribe({
       next: (res) => {
-        const blob = new Blob([res], { type: 'application/pdf' }); // Recibimos el archivo
+        const blob = new Blob([res], { type: 'application/pdf' });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'Reporte.pdf'; // Nombre del archivo descargado
+        a.download = 'Reporte.pdf';
         a.click();
         this.close.emit();
       },

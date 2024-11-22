@@ -26,18 +26,16 @@ export class AuthService {
       .post<AuthResponse>(`${this._apiUrl}/login`, loginData)
       .pipe(
         tap((response) => {
-          this.setSession(response), console.log(response);
+          this.setSession(response);
         }),
         catchError((error) => {
-          debugger;
-          console.log('aut' + error.error.details);
           return this.handleError(error);
         })
       );
   }
 
   logout(): void {
-    localStorage.clear(); // Elimina todos los elementos de localStorage
+    localStorage.clear();
     this.router.navigate(['/auth/login']);
   }
 
@@ -56,7 +54,7 @@ export class AuthService {
       userId: Number(localStorage.getItem('userId')),
     };
 
-    return user; // Devuelve el objeto de usuario si el nombre está presente
+    return user;
   }
 
   private setSession(authResult: AuthResponse): void {
@@ -70,8 +68,7 @@ export class AuthService {
     let errorMessage = 'Error por defecto.';
 
     if (error.error && error.message) {
-      // Si el backend envía un mensaje de error personalizado
-      errorMessage = error.error.details;
+      errorMessage = error.error?.message;
     } else if (error.status === 401) {
       errorMessage = 'Credenciales incorrectas';
     } else if (error.status === 0) {
@@ -79,6 +76,6 @@ export class AuthService {
         'No se pudo conectar con el servidor. Verifica tu conexión a Internet.';
     }
 
-    return throwError(() => new Error(errorMessage));
+    return throwError(() => errorMessage);
   }
 }
