@@ -60,7 +60,6 @@ export class NewUserModalComponent implements OnInit {
     );
   }
   ngOnChanges(changes: SimpleChanges) {
-    // Si isEdit es true y hay datos del usuario, actualiza el formulario
     if (this.isEdit && this.userData) {
       this.createForm.patchValue({
         email: this.userData.email,
@@ -69,12 +68,9 @@ export class NewUserModalComponent implements OnInit {
         areaId: this.userData.area.id,
         role: this.userData.role,
       });
-
-      // Si quieres deshabilitar la contraseña en modo edición
       this.createForm.get('password')?.clearValidators();
       this.createForm.get('confirmPassword')?.clearValidators();
     } else {
-      // Resetear el formulario cuando no está en modo edición
       this.createForm.reset();
     }
   }

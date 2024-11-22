@@ -1,4 +1,4 @@
-import { CategoriesService } from '../../../../data/services/categories.service';
+import { CategoriesService } from '@services/categories.service';
 import {
   Component,
   EventEmitter,
@@ -16,7 +16,7 @@ import {
 } from '@angular/forms';
 import { toast } from 'ngx-sonner';
 import { isFieldRequired } from '@utils/validators/validators';
-import { TicketsService } from '../../../../data/services/tickets.service';
+import { TicketsService } from '@services/tickets.service';
 import { Category } from '@interfaces/category';
 
 @Component({

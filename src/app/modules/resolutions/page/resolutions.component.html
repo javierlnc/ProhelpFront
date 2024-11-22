@@ -53,7 +53,12 @@
       (close)="closeModal()"
     ></app-card-resolution>
   </div>
-  <app-pagination [totalShowing]="resolutions.length"></app-pagination>
+  <app-pagination
+    (previus)="previus()"
+    (next)="next()"
+    [total]="totalResolution"
+    [totalShowing]="resolutions.length"
+  ></app-pagination>
 </div>
 <app-nrmodal
   *ngIf="showModal"

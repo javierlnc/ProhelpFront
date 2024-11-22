@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { AuthService } from '@services/auth.service';
 import { TaskService } from '@services/task.service';
 import { TicketsService } from '@services/tickets.service';
 import { UsermanagmentService } from '@services/usermanagment.service';
@@ -24,12 +25,13 @@ export class NewTaskModalComponent implements OnInit {
   tickets: any[] = [];
   users: any[] = [];
   createForm: FormGroup;
-  role: string | null = localStorage.getItem('role');
-  userId: string | null = localStorage.getItem('id');
+  role = this.authService.getUser()?.rol;
+  userId = this.authService.getUser()?.userId;
   isAdmin: boolean = this.role === 'ADMIN';
 
   constructor(
     private ticketService: TicketsService,
+    private authService: AuthService,
     private userManagmentService: UsermanagmentService,
     private formBuilder: FormBuilder,
     private taskService: TaskService
@@ -101,10 +103,10 @@ export class NewTaskModalComponent implements OnInit {
     if (this.createForm.valid) {
       this.taskService.createTask(this.createForm.value).subscribe({
         next: () => {
-          toast.success('Solicitud asignada');
+          toast.success('Tarea asignada');
           this.closeModal();
         },
-        error: (err) => this.handleError(err, 'Error al asignar solicitud'),
+        error: (err) => this.handleError(err, 'Error al crear la tarea'),
       });
     } else {
       toast.error('Por favor, completa todos los campos requeridos');

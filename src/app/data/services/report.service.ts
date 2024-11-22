@@ -2,26 +2,20 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ReportService {
-  private readonly _basic_url = 'http://localhost:8080/';
+  private readonly _basic_url = environment.apiUrl;
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  generateReport(reportDTO: any): Observable<any> {
-    let params = new HttpParams();
-    for (const key in reportDTO) {
-      if (reportDTO.hasOwnProperty(key) && reportDTO[key] !== null) {
-        params = params.append(key, reportDTO[key]);
-      }
-    }
-
+  generateReport(requestDTO: any): Observable<any> {
     return this.http
-      .get(`${this._basic_url}api/admin/report`, {
+      .post(`${this._basic_url}/admin/report`, requestDTO, {
         headers: this.createAuthorizationHeader(),
-        params: params,
+        responseType: 'blob' as 'json',
       })
       .pipe(catchError(this.handleError));
   }

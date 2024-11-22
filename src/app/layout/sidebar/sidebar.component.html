@@ -57,7 +57,11 @@
       </svg>
       <div>Home</div>
     </a>
-    <a class="sidebar--max" [routerLink]="['/dashboard/solicitud']">
+    <a
+      class="sidebar--max"
+      [routerLink]="['/dashboard/tickets']"
+      (click)="toggleSidebar()"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -73,7 +77,12 @@
       </svg>
       <div>Solicitudes</div>
     </a>
-    <a class="sidebar--max" [routerLink]="['/dashboard/panel']">
+    <a
+      *ngIf="rol !== 'GEN'"
+      class="sidebar--max"
+      [routerLink]="['/dashboard/panel']"
+      (click)="toggleSidebar()"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -96,7 +105,12 @@
       </svg>
       <div>Panel</div>
     </a>
-    <a class="sidebar--max" [routerLink]="['/dashboard/admintools']">
+    <a
+      *ngIf="rol === 'ADMIN'"
+      class="sidebar--max"
+      [routerLink]="['/dashboard/admintools']"
+      (click)="toggleSidebar()"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -117,6 +131,7 @@
       <div>Herramientas</div>
     </a>
     <a
+      *ngIf="rol === 'ADMIN'"
       class="sidebar--max"
       [routerLink]="['/dashboard/usermanagment']"
       (click)="toggleSidebar()"
@@ -173,7 +188,11 @@
         />
       </svg>
     </a>
-    <a class="sidebar--mini" [routerLink]="['/dashboard/panel']">
+    <a
+      *ngIf="rol !== 'GEN'"
+      class="sidebar--mini"
+      [routerLink]="['/dashboard/panel']"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -195,7 +214,11 @@
         <path d="M3 11c6 0 5 -5 9 -5s3 5 9 5" />
       </svg>
     </a>
-    <a class="sidebar--mini" [routerLink]="['/dashboard/admintools']">
+    <a
+      class="sidebar--mini"
+      *ngIf="rol === 'ADMIN'"
+      [routerLink]="['/dashboard/admintools']"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -214,7 +237,11 @@
         />
       </svg>
     </a>
-    <a class="sidebar--mini" [routerLink]="['/dashboard/usermanagment']">
+    <a
+      *ngIf="rol === 'ADMIN'"
+      class="sidebar--mini"
+      [routerLink]="['/dashboard/usermanagment']"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"

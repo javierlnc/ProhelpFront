@@ -1,7 +1,14 @@
 import { TicketResponse } from '@interfaces/ticket-response';
 import { TicketsService } from '@services/tickets.service';
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -32,7 +39,8 @@ export class CloseModalComponent implements OnInit {
     private resolutionsService: ResolutionsService,
     private formBuilder: FormBuilder,
     private ticketsService: TicketsService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {
     this.closeForm = this.initForm();
   }
@@ -57,18 +65,21 @@ export class CloseModalComponent implements OnInit {
   }
 
   private subscribeToResolutionChanges(): void {
+    debugger;
     this.closeForm.get('resolution')?.valueChanges.subscribe((resolutionId) => {
       this.onResolutionChange(resolutionId);
     });
   }
 
   private onResolutionChange(resolutionId: number): void {
+    debugger;
     const selectedResolution = this.resolutions.find(
-      (res) => res.id === resolutionId
+      (res) => res.id == resolutionId
     );
     this.closeForm
       .get('description')
       ?.setValue(selectedResolution?.description || '');
+    this.cdr.markForCheck();
   }
 
   submitForm(): void {

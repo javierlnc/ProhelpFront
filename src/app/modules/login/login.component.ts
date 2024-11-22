@@ -43,8 +43,9 @@ export default class LoginComponent {
       if (username && password) {
         this._authService.login(username, password).subscribe({
           error: (errorData) => {
-            this.errorMessage = errorData;
-            console.log(this.errorMessage);
+            this.errorMessage =
+              errorData || 'El servidor no está disponible en este momento.';
+            toast.error(this.errorMessage);
             this.loginForm.reset();
           },
           complete: () => {

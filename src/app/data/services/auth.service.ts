@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { toast } from 'ngx-sonner';
 import { catchError, Observable, throwError, tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 export interface AuthResponse {
   jwt: string;
@@ -15,7 +16,7 @@ export interface AuthResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private _apiUrl = 'http://localhost:8080/api/auth';
+  private readonly _basic_url = environment.apiUrl;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -23,21 +24,19 @@ export class AuthService {
     const loginData = { username, password };
 
     return this.http
-      .post<AuthResponse>(`${this._apiUrl}/login`, loginData)
+      .post<AuthResponse>(`${this._basic_url}/auth/login`, loginData)
       .pipe(
         tap((response) => {
-          this.setSession(response), console.log(response);
+          this.setSession(response);
         }),
         catchError((error) => {
-          debugger;
-          console.log('aut' + error.message);
           return this.handleError(error);
         })
       );
   }
 
   logout(): void {
-    localStorage.clear(); // Elimina todos los elementos de localStorage
+    localStorage.clear();
     this.router.navigate(['/auth/login']);
   }
 
@@ -56,7 +55,7 @@ export class AuthService {
       userId: Number(localStorage.getItem('userId')),
     };
 
-    return user.username ? user : null; // Devuelve el objeto de usuario si el nombre está presente
+    return user;
   }
 
   private setSession(authResult: AuthResponse): void {
@@ -70,8 +69,7 @@ export class AuthService {
     let errorMessage = 'Error por defecto.';
 
     if (error.error && error.message) {
-      // Si el backend envía un mensaje de error personalizado
-      errorMessage = error.error.message;
+      errorMessage = error.error?.message;
     } else if (error.status === 401) {
       errorMessage = 'Credenciales incorrectas';
     } else if (error.status === 0) {
@@ -79,6 +77,6 @@ export class AuthService {
         'No se pudo conectar con el servidor. Verifica tu conexión a Internet.';
     }
 
-    return throwError(() => new Error(errorMessage));
+    return throwError(() => errorMessage);
   }
 }

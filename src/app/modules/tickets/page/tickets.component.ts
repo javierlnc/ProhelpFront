@@ -5,6 +5,7 @@ import { TicketsService } from '@services/tickets.service';
 import { toast } from 'ngx-sonner';
 import { StatusMapping } from '@utils/status-mapping/status-mapping';
 import { Router } from '@angular/router';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-solicitudes',
@@ -15,8 +16,10 @@ import { Router } from '@angular/router';
 })
 export default class TicketsComponent implements OnInit {
   private ticketService = inject(TicketsService);
+  private authService = inject(AuthService);
   private router = inject(Router);
-  tickets: any[] = []; // Cambiado de 'any' a 'Ticket' (si tienes un modelo)
+  rol = this.authService.getUser()?.rol;
+  tickets: any[] = [];
 
   showModal = false;
 
@@ -36,7 +39,7 @@ export default class TicketsComponent implements OnInit {
     });
   }
   trackByTicketId(index: number, ticket: any): number {
-    return ticket.id; // o cualquier identificador único
+    return ticket.id;
   }
   getTicketStatusName(status: string): string {
     return StatusMapping[status as keyof typeof StatusMapping] || status;

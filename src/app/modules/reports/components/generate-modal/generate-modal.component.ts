@@ -88,7 +88,7 @@ export class GenerateModalComponent implements OnInit {
   submitForm() {
     if (this.isSpecific === false) {
       if (this.reportForm.value.assignedTechnicianId === '') {
-        this.reportForm.patchValue({ assignedTechnicianId: '1' });
+        this.reportForm.patchValue({ assignedTechnicianId: 1 });
       }
     }
     this.populateReportForm();
@@ -99,12 +99,16 @@ export class GenerateModalComponent implements OnInit {
     console.log(this.reportForm.value);
     this.reportService.generateReport(this.reportForm.value).subscribe({
       next: (res) => {
-        console.log(res);
+        const blob = new Blob([res], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Reporte.pdf';
+        a.click();
         this.close.emit();
       },
       error: (err) => {
-        const errorMsg =
-          err?.error?.message || 'Error al actualizar el usuario';
+        const errorMsg = err?.error?.message || 'Error al generar el reporte';
         toast.error(errorMsg);
       },
     });

@@ -28,6 +28,7 @@ export default class ResolutionComponent implements OnInit {
   isEditModal: boolean = false;
   isDeleteModal: boolean = false;
   resolutionDeleted: any;
+  totalResolution!: number;
 
   constructor(private resolutionsService: ResolutionsService) {}
 
@@ -41,6 +42,9 @@ export default class ResolutionComponent implements OnInit {
       .subscribe((res) => {
         this.resolutions = res.resolutionDTOList;
       });
+    this.resolutionsService.getAllResoutionsList().subscribe((res) => {
+      this.totalResolution = res.length;
+    });
   }
   openModal() {
     this.showModal = true;
@@ -61,6 +65,17 @@ export default class ResolutionComponent implements OnInit {
     this.showModal = false;
     this.isEditModal = false;
     this.isDeleteModal = true;
-    console.log('delete ' + this.isDeleteModal + 'Edit ' + this.isEditModal);
+  }
+  next() {
+    this.currentPage += 1;
+    this.getResolutions();
+  }
+  previus() {
+    if (this.currentPage === 1) {
+      return;
+    } else {
+      this.currentPage -= 1;
+      this.getResolutions();
+    }
   }
 }
